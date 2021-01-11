@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang=en>
+<title>Examples of using the ondrag Global Event Attribute</title>
+<meta content="width=device-width">
+<link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+    <div id="game">
+        <div id="unplayed">
+            <div id="offer">
+                <div class="square" id="offer_q1"></div>
+                <div class="square" id="offer_q2"></div>
+                <div class="square" id="offer_q3"></div>
+                <div class="square" id="offer_q4"></div>
+            </div>
+            <div id="deck">15</div>
+            <div id="new_game_and_rules">
+                <button>New Game</button>
+                <button>Rules</button>
+            </div>
+        </div>
+        <div id="board">
+            <div class="square" id="row0col0"></div>
+            <div class="square" id="row0col1"></div>
+            <div class="square" id="row0col2"></div>
+            <div class="square" id="row0col3"></div>
+            <div class="square" id="row0col4"></div>
+            <div class="square" id="row0col5"></div>
+            <div class="square" id="row0col6"></div>
+            <div class="square" id="row0col7"></div>
+            <div class="square" id="row0col8"></div>
+            <div class="square" id="row0col9"></div>
+
+            <div class="square" id="row1col0"></div>
+            <div class="square" id="row1col1"></div>
+            <div class="square" id="row1col2"></div>
+            <div class="square" id="row1col3"></div>
+            <div class="square" id="row1col4"></div>
+            <div class="square" id="row1col5"></div>
+            <div class="square" id="row1col6"></div>
+            <div class="square" id="row1col7"></div>
+            <div class="square" id="row1col8"></div>
+            <div class="square" id="row1col9"></div>
+
+            <div class="square" id="row2col0"></div>
+            <div class="square" id="row2col1"></div>
+            <div class="square" id="row2col2"></div>
+            <div class="square" id="row2col3"></div>
+            <div class="square" id="row2col4"></div>
+            <div class="square" id="row2col5"></div>
+            <div class="square" id="row2col6"></div>
+            <div class="square" id="row2col7"></div>
+            <div class="square" id="row2col8"></div>
+            <div class="square" id="row2col9"></div>
+
+            <div class="square" id="row3col0"></div>
+            <div class="square" id="row3col1"></div>
+            <div class="square" id="row3col2"></div>
+            <div class="square" id="row3col3"></div>
+            <div class="square" id="row3col4"></div>
+            <div class="square" id="row3col5"></div>
+            <div class="square" id="row3col6"></div>
+            <div class="square" id="row3col7"></div>
+            <div class="square" id="row3col8"></div>
+            <div class="square" id="row3col9"></div>
+
+            <div class="square" id="row4col0"></div>
+            <div class="square" id="row4col1"></div>
+            <div class="square" id="row4col2"></div>
+            <div class="square" id="row4col3"></div>
+            <div class="square" id="row4col4"></div>
+            <div class="square" id="row4col5"></div>
+            <div class="square" id="row4col6"></div>
+            <div class="square" id="row4col7"></div>
+            <div class="square" id="row4col8"></div>
+            <div class="square" id="row4col9"></div>
+
+            <div class="square" id="row5col0"></div>
+            <div class="square" id="row5col1"></div>
+            <div class="square" id="row5col2"></div>
+            <div class="square" id="row5col3"></div>
+            <div class="square" id="row5col4"></div>
+            <div class="square" id="row5col5"></div>
+            <div class="square" id="row5col6"></div>
+            <div class="square" id="row5col7"></div>
+            <div class="square" id="row5col8"></div>
+            <div class="square" id="row5col9"></div>
+
+            <div class="square" id="row6col0"></div>
+            <div class="square" id="row6col1"></div>
+            <div class="square" id="row6col2"></div>
+            <div class="square" id="row6col3"></div>
+            <div class="square" id="row6col4"></div>
+            <div class="square" id="row6col5"></div>
+            <div class="square" id="row6col6"></div>
+            <div class="square" id="row6col7"></div>
+            <div class="square" id="row6col8"></div>
+            <div class="square" id="row6col9"></div>
+
+            <div class="square" id="row7col0"></div>
+            <div class="square" id="row7col1"></div>
+            <div class="square" id="row7col2"></div>
+            <div class="square" id="row7col3"></div>
+            <div class="square" id="row7col4"></div>
+            <div class="square" id="row7col5"></div>
+            <div class="square" id="row7col6"></div>
+            <div class="square" id="row7col7"></div>
+            <div class="square" id="row7col8"></div>
+            <div class="square" id="row7col9"></div>
+
+            <div class="square" id="row8col0"></div>
+            <div class="square" id="row8col1"></div>
+            <div class="square" id="row8col2"></div>
+            <div class="square" id="row8col3"></div>
+            <div class="square" id="row8col4"></div>
+            <div class="square" id="row8col5"></div>
+            <div class="square" id="row8col6"></div>
+            <div class="square" id="row8col7"></div>
+            <div class="square" id="row8col8"></div>
+            <div class="square" id="row8col9"></div>
+
+            <div class="square" id="row9col0"></div>
+            <div class="square" id="row9col1"></div>
+            <div class="square" id="row9col2"></div>
+            <div class="square" id="row9col3"></div>
+            <div class="square" id="row9col4"></div>
+            <div class="square" id="row9col5"></div>
+            <div class="square" id="row9col6"></div>
+            <div class="square" id="row9col7"></div>
+            <div class="square" id="row9col8"></div>
+            <div class="square" id="row9col9"></div>
+        </div>
+        <div id="controls">
+            <div id="navigation">
+                <button class="control_button" id="left_up" onclick="move(-1, -1)">&UpperLeftArrow;</button>
+                <button class="control_button" id="up" onclick="move(-1, 0)">&UpArrow;</button>
+                <button class="control_button" id="right_up" onclick="move(-1, 1)">&UpperRightArrow;</button>
+                <button class="control_button" id="left" onclick="move(0, -1)">&LeftArrow;</button>
+                <button class="control_button" id="rotate" onclick="rotate()">&circlearrowright;</button>
+                <button class="control_button" id="right" onclick="move(0, 1)">&RightArrow;</button>
+                <button class="control_button" id="left_down" onclick="move(1, -1)">&LowerLeftArrow;</button>
+                <button class="control_button" id="down" onclick="move(1, 0)">&DownArrow;</button>
+                <button class="control_button" id="right_down" onclick="move(1, 1)">&LowerRightArrow;</button>
+            </div>
+            <div id="end_turn">
+                <button>End Turn</button>
+                <button>End Turn and <br /> Score x points</button>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+
+</body>
+
+</html>

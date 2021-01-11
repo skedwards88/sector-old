@@ -1,0 +1,115 @@
+:root {
+    --star: "\00a2";
+    --planet: "\00a5";
+    --whirl: "\00a3";
+    --moon: "\00a4";
+    --red: rgb(200, 0, 0);
+    --blue: rgb(0, 0, 200);
+    --black: rgb(0, 0, 0);
+    --red-on-blue: rgb(160, 0, 60);
+    --red-on-black: rgb(100, 0, 0);
+    --blue-on-red: rgb(60, 0, 160);
+    --blue-on-black: rgb(0, 0, 100);
+    --quad-size: 50px;
+}
+
+#game {
+    padding: 20px;
+    font-size: xx-large;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: silver;
+}
+
+#board {
+    display: grid;
+    margin: calc(var(--quad-size) / 2) 0;
+    grid-template-columns: repeat(10, var(--quad-size));
+}
+
+.square {
+    width: var(--quad-size);
+    height: var(--quad-size);
+    background-color: black;
+}
+
+#row4col4 {
+    background-color: var(--blue);
+}
+#row4col5 {
+    background-color: var(--blue);
+}
+#row5col4 {
+    background-color: var(--red);
+}
+#row5col5 {
+    background-color: var(--red);
+}
+
+#row4col4::after {
+    content: var(--star);
+}
+#row4col5::after {
+    content: var(--planet);
+}
+#row5col4::after {
+    content: var(--whirl);
+}
+#row5col5::after {
+    content: var(--moon);
+}
+
+#navigation {
+    display: grid;
+    grid-template-columns: repeat(3, var(--quad-size));
+}
+
+.control_button {
+    width: var(--quad-size);
+    height: var(--quad-size);
+    font-weight: bold;
+}
+
+#offer {
+    display: grid;
+    grid-template-columns: repeat(2, var(--quad-size));
+}
+
+#unplayed {
+    display: flex;
+    flex-direction: row;
+}
+
+#deck {
+    width: calc(var(--quad-size) * 2);
+    height: calc(var(--quad-size) * 2);
+    background-color: black;
+    color: white;
+    margin-left: calc(var(--quad-size) / 2);
+}
+
+#controls {
+    display: flex;
+    flex-direction: row;
+}
+
+#end_turn {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#new_game_and_rules {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#offer_q1 {
+    background-color: red;
+}
+
+#offer_q1::after {
+    content: var(--whirl);
+}
