@@ -48,16 +48,16 @@
 }
 
 #row4col4::after {
-    content: var(--star);
+    /* content: var(--star); */
 }
 #row4col5::after {
-    content: var(--planet);
+    /* content: var(--planet); */
 }
 #row5col4::after {
-    content: var(--whirl);
+    /* content: var(--whirl); */
 }
 #row5col5::after {
-    content: var(--moon);
+    /* content: var(--moon); */
 }
 
 #navigation {
