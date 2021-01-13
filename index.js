@@ -119,7 +119,32 @@ const tiles = [
                 })
             ]
         ]
-    })
+    }),
+
+    new Tile({
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
 
 ]
 
@@ -130,9 +155,10 @@ function makeQuad() {
     })
 }
 
-var deck = [];
+let deck = [];
 // let board = Array(10).fill(Array(10).fill(makeQuad()));
-let board = Array.from({ length: 10 }, e => Array(10).fill(new Quadrant({
+let board = Array.from({ length: 10 }, e => Array(10).fill(null))
+board = board.map(r=>r.map(s=>new Quadrant({
     color: "black",
     symbol: null
 })))
@@ -141,6 +167,7 @@ let overlay = {
     column: null,
     tile: null
 }
+let player_color = 'blue'
 
 // Setup Game
 function setUpGame() {
@@ -260,10 +287,6 @@ function validatePlacement() {
         (board_colors[index] === 'red' && color === 'blue') || (board_colors[index] === 'blue' && color === 'red')) 
     )
     v = valids.some(valid => valid)
-    console.log(overlay_colors)
-    console.log(board_colors)
-    console.log(valids)
-    console.log(v)
     if (v) {
         document.getElementById("end_turn_button").setAttribute("disabled", "");
         document.getElementById("score_button").setAttribute("disabled", "");
@@ -289,12 +312,57 @@ function validatePlacement() {
 
 function endTurn() {
 
-    // 
-    //Switch player 
+    // Update the board variable
+    overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        let row = overlay.row + row_index;
+        let column = overlay.column + column_index;
+        board[row][column].color = square.color
+        board[row][column].symbol = square.symbol
+    }))
+
+    // If no tiles remain, the game is over
+    if (!deck.length) {
+        // disable the buttons
+        document.getElementById("end_turn_button").setAttribute("disabled", "");
+        document.getElementById("score_button").setAttribute("disabled", "");
+        document.getElementById("up").setAttribute("disabled", "");
+        document.getElementById("down").setAttribute("disabled", "");
+        document.getElementById("left").setAttribute("disabled", "");
+        document.getElementById("right").setAttribute("disabled", "");
+        document.getElementById("left_up").setAttribute("disabled", "");
+        document.getElementById("right_up").setAttribute("disabled", "");
+        document.getElementById("left_down").setAttribute("disabled", "");
+        document.getElementById("right_down").setAttribute("disabled", "");
+        document.getElementById("rotate").setAttribute("disabled", "");
+
+        return;
+    };
+
+    // Draw a new offer tile and reset the overlay and render the overlay
+    overlay = {
+        row: null,
+        column: null,
+        tile: null
+    }
+        // Draw one for offer, update overlay and render
+        overlay.tile = deck.pop();
+        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+            let element = document.getElementById("offer_row" + row_index + "col" + column_index);
+            element.style.backgroundColor = square.color;
+        }))
+    
+        // update # remaining in draw pile
+        document.getElementById("deck").textContent = deck.length
+    
+    // Switch player color
+    player_color === 'red' ? player_color = 'blue' : player_color = 'red'
+    document.getElementById("offer").style["border-color"] = player_color
 }
+
 function score() {
     //TODO
 }
+
 function endTurnAndScore() {
     //TODO
 }
