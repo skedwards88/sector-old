@@ -168,7 +168,6 @@ function setUpGame() {
     }))
 
     // update # remaining in draw pile
-    console.log(deck)
     document.getElementById("deck").textContent = deck.length
 
 }
@@ -183,7 +182,6 @@ function move(row_increment, column_increment) {
         let column = overlay.column + column_index;
         if (row !== null && column !== null) {
             let element = document.getElementById("row" + row + "col" + column);
-            console.log(board[row][column])
             element.style.backgroundColor = board[row][column].color;
         }
     }))
@@ -221,6 +219,8 @@ function move(row_increment, column_increment) {
     valid_left && valid_down ? document.getElementById("left_down").removeAttribute("disabled") : document.getElementById("left_down").setAttribute("disabled", "");
     valid_right && valid_down ? document.getElementById("right_down").removeAttribute("disabled") : document.getElementById("right_down").setAttribute("disabled", "");
 
+    validatePlacement()
+
     // Calculate the score and update the text in the "score" button
 }
 
@@ -243,10 +243,54 @@ function rotate() {
             element.style.backgroundColor = square.color;
         }))
     }
+
+    validatePlacement()
+}
+
+function validatePlacement() {
+    // If the tile can't be placed, inactivate the "end turn" buttons
+    overlay_colors = overlay.tile.quadrants.flat().map(quadrant => quadrant.color)
+    let row = overlay.row;
+    let column = overlay.column;
+    board_colors = [
+        { row_offset: 0, column_offset: 0 }, { row_offset: 0, column_offset: 1 },
+        { row_offset: 1, column_offset: 0 }, { row_offset: 1, column_offset: 1 }
+    ].map(offset => board[row + offset.row_offset][column + offset.column_offset].color)
+    valids = overlay_colors.map((color, index) => (
+        (board_colors[index] === 'red' && color === 'blue') || (board_colors[index] === 'blue' && color === 'red')) 
+    )
+    v = valids.some(valid => valid)
+    console.log(overlay_colors)
+    console.log(board_colors)
+    console.log(valids)
+    console.log(v)
+    if (v) {
+        document.getElementById("end_turn_button").setAttribute("disabled", "");
+        document.getElementById("score_button").setAttribute("disabled", "");
+    } else {
+        document.getElementById("end_turn_button").removeAttribute("disabled")
+        document.getElementById("score_button").removeAttribute("disabled")
+    }
+    // overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+    //     let row = overlay.row + row_index;
+    //     let column = overlay.column + column_index;
+    //     let overlay_color = square.color;
+    //     let tile_color = board[row][column].color;
+    //     if ((tile_color === 'red' && overlay_color === "blue") || (tile_color === 'blue' && overlay_color === "red")) {
+    //         document.getElementById("end_turn_button").setAttribute("disabled", "");
+    //         document.getElementById("score_button").setAttribute("disabled", "");
+    //         return;
+    //     } else {
+    //         document.getElementById("end_turn_button").removeAttribute("disabled")
+    //         document.getElementById("score_button").removeAttribute("disabled")
+    //     }
+    // }))
 }
 
 function endTurn() {
-    //TODO
+
+    // 
+    //Switch player 
 }
 function score() {
     //TODO
