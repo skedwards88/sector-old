@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang=en>
-<title>Sector</title>
+<title>Test</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="test.css">
 
 </head>
 
@@ -119,12 +119,12 @@
             <div class="square" id="row9col8"></div>
             <div class="square" id="row9col9"></div>
         </div>
-            <div id="offer">
-                <div class="square" id="offer_row0col0"></div>
-                <div class="square" id="offer_row0col1"></div>
-                <div class="square" id="offer_row1col0"></div>
-                <div class="square" id="offer_row1col1"></div>
-            </div>
+        <div id="offer">
+            <div class="square" id="offer_row0col0"></div>
+            <div class="square" id="offer_row0col1"></div>
+            <div class="square" id="offer_row1col0"></div>
+            <div class="square" id="offer_row1col1"></div>
+        </div>
         <div id="controls">
             <div id="navigation">
                 <button class="control_button" id="left_up" disabled onclick="move(-1, -1)">&UpperLeftArrow;</button>
@@ -138,20 +138,29 @@
                 <button class="control_button" id="right_down" disabled onclick="move(1, 1)">&LowerRightArrow;</button>
             </div>
             <div id="non-nav">
-            <div id="end_turn">
-                <button class="reg_button" id="end_turn_button" disabled onclick="endTurn()">End Turn</button>
-                <button class="reg_button" id="score_button" disabled onclick="endTurnAndScore()">End Turn and <br /> Score x
-                    points</button>
-            </div>
-            <div id="new_game_and_rules">
-                <button class="reg_button" onclick="setUpGame()">New Game </button>
-                <button class="reg_button">Rules</button>
+                
+                    <button class="reg_button" onclick="setUpGame()">New Game </button>
+                    <button class="reg_button">Rules</button>
 
+                    <button class="reg_button" id="end_turn_button" disabled onclick="endTurn()">End Turn</button>
+                    <button class="reg_button" id="score_button" disabled onclick="endTurnAndScore()">End Turn and Score</button>
             </div>
-        </div>
+            <!-- <div id="non-nav">
+                
+                <div id="new_game_and_rules">
+                    <button class="reg_button" onclick="setUpGame()">New Game </button>
+                    <button class="reg_button">Rules</button>
+
+                </div>
+                <div id="end_turn">
+                    <button class="reg_button" id="end_turn_button" disabled onclick="endTurn()">End Turn</button>
+                    <button class="reg_button" id="score_button" disabled onclick="endTurnAndScore()">End Turn and
+                        <br /> Score x
+                        points</button>
+                </div>
+            </div> -->
         </div>
     </div>
-    <script src="index.js"></script>
 
 </body>
 

@@ -1,0 +1,106 @@
+:root {
+    --quad: 9vw;
+    --nav: 20vw;
+}
+
+
+
+/* @media (orientation: landscape) { 
+    #game {
+
+    }
+} */
+
+  #game {
+    background-color: black;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 5px solid black;
+}
+
+#board {
+    /* background-color: palegoldenrod; */
+    display: grid;
+    grid-template-columns: repeat(10, var(--quad));
+    grid-template-rows: repeat(10, var(--quad));
+    justify-content: center;
+}
+
+#navigation {
+    display: grid;
+    grid-template-columns: repeat(3, var(--nav));
+    grid-template-rows: repeat(3, var(--nav));
+    grid-gap: 3px;
+}
+
+#non-nav {
+    display: grid;
+    grid-template-rows: repeat(4, 100fr);
+    grid-gap: 5px 5px;
+    margin-left: 5px;
+}
+
+.square {
+    background-color: silver;
+    width: var(--quad);
+    height: var(--quad);
+}
+
+#offer {
+    display: grid;
+    grid-template-columns: repeat(2, var(--quad));
+    justify-content: center;
+    margin: 3px;
+    align-content: center;
+}
+
+#controls {
+    display: flex;
+    flex-direction: row;
+}
+
+.reg_button {
+    border-radius: 5px;
+background-color: silver;
+
+}
+.control_button {
+    background-color: silver;
+
+}
+#left_up {
+    border-radius: 10px 0 0 0;
+}
+#right_up {
+    border-radius: 0 10px 0 0;
+}
+#right_down {
+    border-radius: 0 0 10px 0;
+}
+#left_down {
+    border-radius: 0 0 0 10px;
+}
+
+@media (orientation: landscape) { 
+    :root {
+        --quad: 9vh;
+        --nav: 20vh;
+        }
+    #game{
+        display: flex;
+        flex-direction: row;
+    }
+    #controls {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    #non-nav {
+        display: grid;
+        grid-template-columns: repeat(2, 30vh);
+        grid-template-rows: repeat(2, 15vh);
+        margin: 0;
+    }
+    
+    
+}

@@ -9,8 +9,8 @@
 // const tiles = require("./tiles")
 // const shuffleArray = require("./shuffle");
 
+// Swap each value in an array, starting at the end of the array, with a position equal or earlier in the array.
 function shuffleArray(array) {
-    // Swap each value in an array, starting at the end of the array, with a position equal or earlier in the array.
     for (let index = array.length - 1; index > 0; index--) {
 
         // Get a random index from 0 to the current index of the array
@@ -148,29 +148,26 @@ const tiles = [
 
 ]
 
-function makeQuad() {
-    return new Quadrant({
-        color: "black",
-        symbol: null
-    })
-}
-
-let deck = [];
-// let board = Array(10).fill(Array(10).fill(makeQuad()));
-let board = Array.from({ length: 10 }, e => Array(10).fill(null))
-board = board.map(r=>r.map(s=>new Quadrant({
-    color: "black",
-    symbol: null
-})))
-let overlay = {
-    row: null,
-    column: null,
-    tile: null
-}
-let player_color = 'blue'
+let deck
+let board
+let overlay
+let player_color
 
 // Setup Game
 function setUpGame() {
+
+    board = Array(10).fill(Array(10).fill(null));
+    // board = Array.from({ length: 10 }, e => Array(10).fill(null))
+    board = board.map(row => row.map(square => new Quadrant({
+        color: "black",
+        symbol: null
+    })))
+    overlay = {
+        row: null,
+        column: null,
+        tile: null
+    }
+    player_color = 'blue'
 
     // Shuffle tiles
     deck = tiles.slice();
@@ -197,34 +194,45 @@ function setUpGame() {
     // update # remaining in draw pile
     document.getElementById("deck").textContent = deck.length
 
+        // Disable the move buttons except for down
+        document.getElementById("up").setAttribute("disabled", "")
+        document.getElementById("left").setAttribute("disabled", "")
+        document.getElementById("right").setAttribute("disabled", "")
+        document.getElementById("left_up").setAttribute("disabled", "")
+        document.getElementById("right_up").setAttribute("disabled", "")
+        document.getElementById("left_down").setAttribute("disabled", "")
+        document.getElementById("right_down").setAttribute("disabled", "")
+    
+
 }
 
 setUpGame()
 
 function move(row_increment, column_increment) {
 
-    // Clear the styling on the old squares
-    overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-        let row = overlay.row + row_index;
-        let column = overlay.column + column_index;
-        if (row !== null && column !== null) {
+    // Clear the styling from the old overlay position
+    if (overlay.row !== null && overlay.column !== null) {
+        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+            let row = overlay.row + row_index;
+            let column = overlay.column + column_index;
             let element = document.getElementById("row" + row + "col" + column);
             element.style.backgroundColor = board[row][column].color;
-        }
-    }))
+        }))
+    }
 
-    // If moving onto the board, clear the offer
+    // If moving onto the board, clear the offer styling
     if (overlay.row === null) {
         overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
             element.style.backgroundColor = "black";
         }))
     }
+
     // Update overlay position
     overlay.row === null ? overlay.row = 0 : overlay.row += row_increment;
     overlay.column === null ? overlay.column = 0 : overlay.column += column_increment;
 
-    // Update square styling
+    // Update square styling with the new overlay position
     overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let row = overlay.row + row_index;
         let column = overlay.column + column_index;
@@ -284,7 +292,7 @@ function validatePlacement() {
         { row_offset: 1, column_offset: 0 }, { row_offset: 1, column_offset: 1 }
     ].map(offset => board[row + offset.row_offset][column + offset.column_offset].color)
     valids = overlay_colors.map((color, index) => (
-        (board_colors[index] === 'red' && color === 'blue') || (board_colors[index] === 'blue' && color === 'red')) 
+        (board_colors[index] === 'red' && color === 'blue') || (board_colors[index] === 'blue' && color === 'red'))
     )
     v = valids.some(valid => valid)
     if (v) {
@@ -344,16 +352,25 @@ function endTurn() {
         column: null,
         tile: null
     }
-        // Draw one for offer, update overlay and render
-        overlay.tile = deck.pop();
-        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-            let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            element.style.backgroundColor = square.color;
-        }))
-    
-        // update # remaining in draw pile
-        document.getElementById("deck").textContent = deck.length
-    
+    // Draw one for offer, update overlay and render
+    overlay.tile = deck.pop();
+    overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        let element = document.getElementById("offer_row" + row_index + "col" + column_index);
+        element.style.backgroundColor = square.color;
+    }))
+
+    // update # remaining in draw pile
+    document.getElementById("deck").textContent = deck.length
+
+    // Disable the move buttons except for down
+    document.getElementById("up").setAttribute("disabled", "")
+    document.getElementById("left").setAttribute("disabled", "")
+    document.getElementById("right").setAttribute("disabled", "")
+    document.getElementById("left_up").setAttribute("disabled", "")
+    document.getElementById("right_up").setAttribute("disabled", "")
+    document.getElementById("left_down").setAttribute("disabled", "")
+    document.getElementById("right_down").setAttribute("disabled", "")
+
     // Switch player color
     player_color === 'red' ? player_color = 'blue' : player_color = 'red'
     document.getElementById("offer").style["border-color"] = player_color
@@ -364,9 +381,5 @@ function score() {
 }
 
 function endTurnAndScore() {
-    //TODO
-}
-
-function newGame() {
     //TODO
 }

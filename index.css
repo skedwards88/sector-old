@@ -10,27 +10,47 @@
     --red-on-black: rgb(100, 0, 0);
     --blue-on-red: rgb(60, 0, 160);
     --blue-on-black: rgb(0, 0, 100);
-    --quad-size: 50px;
+    /* --quad-size: 30px; fallback fallback (if clamp and vmin are not supported) */
+    /* --quad-size: 8vh;  fallback (if clamp is not supported) */
+    --quad-size: 9vh;
+    --button-size: 15vh;
+}
+
+ @media (orientation: landscape) { 
+    #game{
+        background-color: silver;
+        display: flex;
+        flex-direction: row;
+    }
+  }
+
+.reg_button {
+    padding: 5px;
+    margin: 3px;
 }
 
 #game {
-    padding: 20px;
+    /* padding: 20px; */
     font-size: xx-large;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-    background-color: silver;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* background-color: silver; */
 }
 
 #board {
     display: grid;
-    margin: calc(var(--quad-size) / 2) 0;
-    grid-template-columns: repeat(10, var(--quad-size));
+    /* margin: calc(var(--quad-size) / 2) 0; */
+    grid-template-columns: repeat(10, 100fr);
+    width: 50px;
 }
 
 .square {
-    width: var(--quad-size);
-    height: var(--quad-size);
+    /* width: var(--quad-size);
+    height: var(--quad-size); */
     background-color: black;
 }
 
@@ -62,18 +82,21 @@
 
 #navigation {
     display: grid;
-    grid-template-columns: repeat(3, var(--quad-size));
+    grid-template-columns: repeat(3, var(--button-size));
 }
 
 .control_button {
-    width: var(--quad-size);
-    height: var(--quad-size);
+    width: var(--button-size);
+    height: var(--button-size);
     font-weight: bold;
 }
 
 #offer {
     display: grid;
     grid-template-columns: repeat(2, var(--quad-size));
+    /* border: 3px solid blue; */
+    justify-content: center;
+    margin: 3px;
 }
 
 #unplayed {
@@ -81,19 +104,16 @@
     flex-direction: row;
 }
 
-#deck {
-    width: calc(var(--quad-size) * 2);
-    height: calc(var(--quad-size) * 2);
-    background-color: black;
-    color: white;
-    margin-left: calc(var(--quad-size) / 2);
-}
-
 #controls {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
+#non-nav {
+    display: flex;
+    flex-direction: column;
+
+}
 #end_turn {
     display: flex;
     flex-direction: column;
