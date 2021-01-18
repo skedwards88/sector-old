@@ -52,20 +52,48 @@
     height: var(--quad);
     color: white;
     white-space: nowrap;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 5px;
+    background-origin: content-box;
+    box-sizing: border-box;
 }
 
-.overlay {
-    opacity: .5;
+.moon{
+    background-image: url(./images/moon.svg);
+}
+
+.planet {
+    background-image: url(./images/planet.svg);
+}
+
+.star {
+    background-image: url(./images/star.svg);
+}
+
+.whirl {
+    background-image: url(./images/whirl.svg);
 }
 
 .square.offer{
     background-color: transparent; 
 }
+
 .square.red{
     background-color: red; 
 }
+
 .square.blue{
     background-color: blue; 
+}
+
+.overlay.red {
+    background-color: rgba(255,0,0,0.7);
+}
+
+.overlay.blue {
+    background-color: rgba(0,0,255,0.7);
 }
 
 #controls {

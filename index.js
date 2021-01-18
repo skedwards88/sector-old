@@ -40,9 +40,8 @@ class Quadrant {
 }
 
 class Tile {
-    constructor({ quadrants, quadrants2 }) {
+    constructor({ quadrants }) {
         this.quadrants = quadrants;
-        this.quadrants2 = quadrants2;
     }
 }
 
@@ -52,41 +51,23 @@ const tiles = [
             [
                 new Quadrant({
                     color: "red",
-                    symbol: null
+                    symbol: "moon"
                 }),
                 new Quadrant({
                     color: "blue",
-                    symbol: null
+                    symbol: "star"
                 })
             ],
             [
                 new Quadrant({
                     color: "blue",
-                    symbol: null
+                    symbol: "whirl"
                 }),
                 new Quadrant({
                     color: "blue",
                     symbol: null
                 })
             ]
-        ],
-        quadrants2: [
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                })
         ]
     }),
 
@@ -95,42 +76,24 @@ const tiles = [
             [
                 new Quadrant({
                     color: "blue",
-                    symbol: null
+                    symbol: "moon"
                 }),
                 new Quadrant({
                     color: "red",
-                    symbol: null
+                    symbol: "moon"
                 })
             ],
             [
                 new Quadrant({
                     color: "red",
-                    symbol: null
+                    symbol: "planet"
                 }),
                 new Quadrant({
                     color: "blue",
                     symbol: null
                 })
             ]
-        ],
-        quadrants2: [
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                })
-            ]
+        ]
     }),
 
     new Tile({
@@ -138,42 +101,24 @@ const tiles = [
             [
                 new Quadrant({
                     color: "red",
-                    symbol: null
+                    symbol: "whirl"
                 }),
                 new Quadrant({
                     color: "red",
-                    symbol: null
+                    symbol: "moon"
                 })
             ],
             [
                 new Quadrant({
                     color: "red",
-                    symbol: null
+                    symbol: "whirl"
                 }),
                 new Quadrant({
                     color: "blue",
                     symbol: null
                 })
             ]
-        ],
-        quadrants2: [
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                })
-            ]
+        ]
     }),
 
     new Tile({
@@ -181,42 +126,24 @@ const tiles = [
             [
                 new Quadrant({
                     color: "red",
-                    symbol: null
+                    symbol: "star"
                 }),
                 new Quadrant({
                     color: "red",
-                    symbol: null
+                    symbol: "star"
                 })
             ],
             [
                 new Quadrant({
                     color: "blue",
-                    symbol: null
+                    symbol: "planet"
                 }),
                 new Quadrant({
                     color: "blue",
                     symbol: null
                 })
             ]
-        ],
-        quadrants2: [
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                })
-            ]
+        ]
     }),
 ]
 
@@ -225,10 +152,6 @@ let board
 let board_overlay
 let offer
 let player_color
-
-function setColor(element, color) {
-    element.style.backgroundColor = "var(--" + color + ")"
-}
 
 // Setup Game
 function setUpGame() {
@@ -259,18 +182,22 @@ function setUpGame() {
 
     // Put one in middle of board (populate board, render tile)
     starting_tile = deck.pop();
-    let starting_positions = [{row:4, column:4},{row:4, column:5},{row:5, column:4},{row:5, column:5}];
-    starting_positions.forEach((position, index) => {
-        board[position.row][position.column] = starting_tile.quadrants2[index];
-        let element = document.getElementById("row" + position.row + "col" + position.column+"played");
-        element.classList.add(starting_tile.quadrants2[index].color)
-    })
+
+    starting_tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        let row = 4 + row_index;
+        let column = 4 + column_index;
+        board[row][column] = square;
+        let element = document.getElementById("row" + row + "col" + column + "played");
+        element.classList.add(square.color)
+        if (square.symbol) element.classList.add(square.symbol)
+    }))
 
     // Draw one for offer, update offer and render
     offer.tile = deck.pop();
     offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("offer_row" + row_index + "col" + column_index);
         element.classList.add(square.color)
+        if (square.symbol) element.classList.add(square.symbol)
     }))
 
     // Disable the move buttons except for the ones to enter the board
@@ -290,8 +217,7 @@ function move(row_increment, column_increment) {
         // clear the offer styling
         offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            // element.classList.add("transparent")
-            element.classList.remove("red", "blue")
+            element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
         }))
 
         // Update offer position
@@ -303,8 +229,7 @@ function move(row_increment, column_increment) {
             let row = offer.row + row_index;
             let column = offer.column + column_index;
             let element = document.getElementById("row" + row + "col" + column+"overlay");
-            // element.classList.add("transparent")
-            element.classList.remove("red", "blue")
+            element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
         }))
 
         // Update offer position
@@ -321,6 +246,7 @@ function move(row_increment, column_increment) {
         let column = offer.column + column_index;
         let element = document.getElementById("row" + row + "col" + column+"overlay");
         element.classList.add(square.color)
+        if (square.symbol) element.classList.add(square.symbol)
     }))
 
     // If it is invalid to move in a direction, inactivate those move buttons
@@ -350,8 +276,9 @@ function rotate() {
     if (offer.row === null) {
         offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            element.classList.remove("red", "blue")
+            element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
             element.classList.add(square.color)
+            if (square.symbol) element.classList.add(square.symbol)
         }))
 
     } else {
@@ -359,8 +286,9 @@ function rotate() {
             let row = offer.row + row_index;
             let column = offer.column + column_index;
             let element = document.getElementById("row" + row + "col" + column+"overlay");
-            element.classList.remove("red", "blue")
+            element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
             element.classList.add(square.color)
+            if (square.symbol) element.classList.add(square.symbol)
         }))
         validatePlacement()
     }
@@ -413,11 +341,13 @@ function endTurn() {
         board[row][column].symbol = square.symbol
         // and transfer the style to the board
         let element = document.getElementById("row" + row + "col" + column+"played");
+        element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
         element.classList.add(square.color)
+        if (square.symbol) element.classList.add(square.symbol)
         // and clear the overlay
         element = document.getElementById("row" + row + "col" + column+"overlay");
         element.classList.remove(square.color)
-
+        element.classList.remove(square.symbol)
     }))
 
     // If no tiles remain, the game is over
@@ -449,6 +379,8 @@ function endTurn() {
     offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("offer_row" + row_index + "col" + column_index);
         element.classList.add(square.color)
+        if (square.symbol) element.classList.add(square.symbol)
+
     }))
 
     // update # remaining in draw pile
@@ -476,9 +408,9 @@ function endTurnAndScore() {
 function newGame() {
     board.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("row" + row_index + "col" + column_index+"played");
-        element.classList.remove("red","blue")
+        element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
         element = document.getElementById("row" + row_index + "col" + column_index+"overlay");
-        element.classList.remove("red","blue")
+        element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
     }))
     document.getElementById("offer_row1col0").textContent = ""
 
