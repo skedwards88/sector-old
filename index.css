@@ -39,12 +39,33 @@
     border: 1px solid white;
 }
 
+.section {
+    display: grid;
+}
+.section > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
 .square {
-    background-color: black;
     width: var(--quad);
     height: var(--quad);
     color: white;
     white-space: nowrap;
+}
+
+.overlay {
+    opacity: .5;
+}
+
+.square.offer{
+    background-color: transparent; 
+}
+.square.red{
+    background-color: red; 
+}
+.square.blue{
+    background-color: blue; 
 }
 
 #controls {

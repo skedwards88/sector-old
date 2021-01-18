@@ -41,6 +41,13 @@ button:disabled {
     justify-content: center;
 }
 
+.section {
+    display: grid;
+}
+.section > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+  }
 #navigation {
     display: grid;
     grid-template-columns: repeat(3, var(--nav));
@@ -59,8 +66,22 @@ button:disabled {
     background-color: silver;
     width: var(--quad);
     height: var(--quad);
+
 }
 
+.overlay {
+    background-color: red;
+    opacity: .5;
+    width: var(--quad);
+    height: var(--quad);
+}
+.played {
+    background-color: yellow;
+    width: var(--quad);
+    height: var(--quad);
+    opacity: .5;
+
+}
 #offer {
     display: grid;
     grid-template-columns: repeat(2, var(--quad));
@@ -89,7 +110,6 @@ button:disabled {
 #left_down {
     border-radius: 0 0 0 10px;
 }
-
 @media (orientation: landscape) { 
     :root {
         --quad: 9vh;

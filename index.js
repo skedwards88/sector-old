@@ -40,8 +40,9 @@ class Quadrant {
 }
 
 class Tile {
-    constructor({ quadrants }) {
+    constructor({ quadrants, quadrants2 }) {
         this.quadrants = quadrants;
+        this.quadrants2 = quadrants2;
     }
 }
 
@@ -68,6 +69,24 @@ const tiles = [
                     symbol: null
                 })
             ]
+        ],
+        quadrants2: [
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                })
         ]
     }),
 
@@ -93,7 +112,25 @@ const tiles = [
                     symbol: null
                 })
             ]
-        ]
+        ],
+        quadrants2: [
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                })
+            ]
     }),
 
     new Tile({
@@ -118,7 +155,25 @@ const tiles = [
                     symbol: null
                 })
             ]
-        ]
+        ],
+        quadrants2: [
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                })
+            ]
     }),
 
     new Tile({
@@ -143,23 +198,36 @@ const tiles = [
                     symbol: null
                 })
             ]
-        ]
+        ],
+        quadrants2: [
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                })
+            ]
     }),
-
 ]
 
 let deck
 let board
-let overlay
+let board_overlay
+let offer
 let player_color
 
-function setColor(element, color, underColor = null) {
-    if (underColor) {
-        element.style.backgroundColor = "var(--" + color + "-on-" + underColor + ")"
-
-    } else {
-        element.style.backgroundColor = "var(--" + color + ")"
-    }
+function setColor(element, color) {
+    element.style.backgroundColor = "var(--" + color + ")"
 }
 
 // Setup Game
@@ -171,7 +239,14 @@ function setUpGame() {
         color: "black",
         symbol: null
     })))
-    overlay = {
+
+    board_overlay = Array(10).fill(Array(10).fill(null));
+    board_overlay = board_overlay.map(row => row.map(square => new Quadrant({
+        color: "transparent",
+        symbol: null
+    })))
+
+    offer = {
         row: null,
         column: null,
         tile: null
@@ -184,24 +259,19 @@ function setUpGame() {
 
     // Put one in middle of board (populate board, render tile)
     starting_tile = deck.pop();
-    board[4][4] = starting_tile.quadrants[0][0]
-    board[4][5] = starting_tile.quadrants[0][1]
-    board[5][4] = starting_tile.quadrants[1][0]
-    board[5][5] = starting_tile.quadrants[1][1]
-    board.forEach((row, row_index) => row.forEach((square, column_index) => {
-        let element = document.getElementById("row" + row_index + "col" + column_index);
-        setColor(element, square.color)
-    }))
+    let starting_positions = [{row:4, column:4},{row:4, column:5},{row:5, column:4},{row:5, column:5}];
+    starting_positions.forEach((position, index) => {
+        board[position.row][position.column] = starting_tile.quadrants2[index];
+        let element = document.getElementById("row" + position.row + "col" + position.column+"played");
+        element.classList.add(starting_tile.quadrants2[index].color)
+    })
 
-    // Draw one for offer, update overlay and render
-    overlay.tile = deck.pop();
-    overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+    // Draw one for offer, update offer and render
+    offer.tile = deck.pop();
+    offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-        setColor(element, square.color);
+        element.classList.add(square.color)
     }))
-
-    // update # remaining in draw pile
-    document.getElementById("offer_row0col0").textContent = ""
 
     // Disable the move buttons except for the ones to enter the board
     document.getElementById("left").setAttribute("disabled", "")
@@ -213,53 +283,51 @@ function setUpGame() {
 
 setUpGame()
 
-function moveOnToBoard(row_increment, column_increment) {
-
-
-}
-
 function move(row_increment, column_increment) {
 
-    if (overlay.row === null) {
+    // if moving onto the board
+    if (offer.row === null) {
         // clear the offer styling
-        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            setColor(element, "transparent")
+            // element.classList.add("transparent")
+            element.classList.remove("red", "blue")
         }))
 
-        // Update overlay position
-        overlay.row = 8; // Row is always 8 when moving onto the board
-        overlay.column = 4 + column_increment;
-    } else {
-        // Clear the styling from the old overlay position
-        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-            let row = overlay.row + row_index;
-            let column = overlay.column + column_index;
-            let element = document.getElementById("row" + row + "col" + column);
-            setColor(element, board[row][column].color)
+        // Update offer position
+        offer.row = 8; // Row is always 8 when moving onto the board
+        offer.column = 4 + column_increment;
+    } else { // moving within the board
+        // Clear the styling from the old offer position
+        offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+            let row = offer.row + row_index;
+            let column = offer.column + column_index;
+            let element = document.getElementById("row" + row + "col" + column+"overlay");
+            // element.classList.add("transparent")
+            element.classList.remove("red", "blue")
         }))
 
-        // Update overlay position
-        overlay.row += row_increment;
-        overlay.column += column_increment;
+        // Update offer position
+        offer.row += row_increment;
+        offer.column += column_increment;
     }
 
     document.getElementById("offer_row1col0").textContent = deck.length + " remaining"
 
 
-    // Update square styling with the new overlay position
-    overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-        let row = overlay.row + row_index;
-        let column = overlay.column + column_index;
-        let element = document.getElementById("row" + row + "col" + column);
-        setColor(element, square.color)
+    // Update square styling with the new offer position
+    offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        let row = offer.row + row_index;
+        let column = offer.column + column_index;
+        let element = document.getElementById("row" + row + "col" + column+"overlay");
+        element.classList.add(square.color)
     }))
 
     // If it is invalid to move in a direction, inactivate those move buttons
-    let valid_up = overlay.row !== 0;
-    let valid_down = overlay.row + 1 !== (board.length - 1);
-    let valid_left = overlay.column !== 0;
-    let valid_right = overlay.column + 1 !== board[0].length - 1;
+    let valid_up = offer.row !== 0;
+    let valid_down = offer.row + 1 !== (board.length - 1);
+    let valid_left = offer.column !== 0;
+    let valid_right = offer.column + 1 !== board[0].length - 1;
     valid_up ? document.getElementById("up").removeAttribute("disabled") : document.getElementById("up").setAttribute("disabled", "");
     valid_down ? document.getElementById("down").removeAttribute("disabled") : document.getElementById("down").setAttribute("disabled", "");
     valid_left ? document.getElementById("left").removeAttribute("disabled") : document.getElementById("left").setAttribute("disabled", "");
@@ -276,21 +344,23 @@ function move(row_increment, column_increment) {
 
 function rotate() {
     // Rotate the tile 90 degrees clockwise
-    overlay.tile.quadrants = [[overlay.tile.quadrants[1][0], overlay.tile.quadrants[0][0]], [overlay.tile.quadrants[1][1], overlay.tile.quadrants[0][1]]]
+    offer.tile.quadrants = [[offer.tile.quadrants[1][0], offer.tile.quadrants[0][0]], [offer.tile.quadrants[1][1], offer.tile.quadrants[0][1]]]
 
     // Update offer or square styling
-    if (overlay.row === null) {
-        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+    if (offer.row === null) {
+        offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            setColor(element, square.color)
+            element.classList.remove("red", "blue")
+            element.classList.add(square.color)
         }))
 
     } else {
-        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-            let row = overlay.row + row_index;
-            let column = overlay.column + column_index;
-            let element = document.getElementById("row" + row + "col" + column);
-            setColor(element, square.color)
+        offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+            let row = offer.row + row_index;
+            let column = offer.column + column_index;
+            let element = document.getElementById("row" + row + "col" + column+"overlay");
+            element.classList.remove("red", "blue")
+            element.classList.add(square.color)
         }))
         validatePlacement()
     }
@@ -299,9 +369,9 @@ function rotate() {
 
 function validatePlacement() {
     // If the tile can't be placed, inactivate the "end turn" buttons
-    overlay_colors = overlay.tile.quadrants.flat().map(quadrant => quadrant.color)
-    let row = overlay.row;
-    let column = overlay.column;
+    overlay_colors = offer.tile.quadrants.flat().map(quadrant => quadrant.color)
+    let row = offer.row;
+    let column = offer.column;
     board_colors = [
         { row_offset: 0, column_offset: 0 }, { row_offset: 0, column_offset: 1 },
         { row_offset: 1, column_offset: 0 }, { row_offset: 1, column_offset: 1 }
@@ -317,9 +387,9 @@ function validatePlacement() {
         document.getElementById("end_turn_button").removeAttribute("disabled")
         document.getElementById("score_button").removeAttribute("disabled")
     }
-    // overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-    //     let row = overlay.row + row_index;
-    //     let column = overlay.column + column_index;
+    // offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+    //     let row = offer.row + row_index;
+    //     let column = offer.column + column_index;
     //     let overlay_color = square.color;
     //     let tile_color = board[row][column].color;
     //     if ((tile_color === 'red' && overlay_color === "blue") || (tile_color === 'blue' && overlay_color === "red")) {
@@ -335,12 +405,19 @@ function validatePlacement() {
 
 function endTurn() {
 
-    // Update the board variable
-    overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-        let row = overlay.row + row_index;
-        let column = overlay.column + column_index;
+    // Update the board variable 
+    offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        let row = offer.row + row_index;
+        let column = offer.column + column_index;
         board[row][column].color = square.color
         board[row][column].symbol = square.symbol
+        // and transfer the style to the board
+        let element = document.getElementById("row" + row + "col" + column+"played");
+        element.classList.add(square.color)
+        // and clear the overlay
+        element = document.getElementById("row" + row + "col" + column+"overlay");
+        element.classList.remove(square.color)
+
     }))
 
     // If no tiles remain, the game is over
@@ -361,21 +438,21 @@ function endTurn() {
         return;
     };
 
-    // Draw a new offer tile and reset the overlay and render the overlay
-    overlay = {
+    // Draw a new offer tile and reset the offer and render the offer
+    offer = {
         row: null,
         column: null,
         tile: null
     }
-    // Draw one for offer, update overlay and render
-    overlay.tile = deck.pop();
-    overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+    // Draw one for offer, update offer and render
+    offer.tile = deck.pop();
+    offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-        setColor(element, square.color)
+        element.classList.add(square.color)
     }))
 
     // update # remaining in draw pile
-    document.getElementById("offer_row0col0").textContent = ""
+    document.getElementById("offer_row1col0").textContent = ""
 
     // Disable the move buttons except for the ones to enter the board
     document.getElementById("left").setAttribute("disabled", "")
@@ -386,7 +463,6 @@ function endTurn() {
 
     // Switch player color
     player_color === 'red' ? player_color = 'blue' : player_color = 'red'
-    document.getElementById("offer").style["border-color"] = player_color
 }
 
 function score() {
@@ -395,4 +471,16 @@ function score() {
 
 function endTurnAndScore() {
     //TODO
+}
+
+function newGame() {
+    board.forEach((row, row_index) => row.forEach((square, column_index) => {
+        let element = document.getElementById("row" + row_index + "col" + column_index+"played");
+        element.classList.remove("red","blue")
+        element = document.getElementById("row" + row_index + "col" + column_index+"overlay");
+        element.classList.remove("red","blue")
+    }))
+    document.getElementById("offer_row1col0").textContent = ""
+
+    setUpGame()
 }
