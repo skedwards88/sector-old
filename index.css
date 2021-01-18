@@ -6,6 +6,7 @@
     --red: rgb(148, 17, 17);
     --blue: rgb(37, 17, 148);
     --black: rgb(0, 0, 0);
+    --transparent: transparent;
     --red-on-blue: rgb(160, 0, 60);
     --red-on-black: rgb(100, 0, 0);
     --blue-on-red: rgb(60, 0, 160);
@@ -42,6 +43,8 @@
     background-color: black;
     width: var(--quad);
     height: var(--quad);
+    color: white;
+    white-space: nowrap;
 }
 
 #controls {
@@ -112,9 +115,15 @@ button:disabled {
         display: flex;
         flex-direction: row;
     }
+    #board {
+        transform: rotate(270deg);
+    }
     #controls {
         display: flex;
         flex-direction: column-reverse;
+    }
+    #navigation {
+        transform: rotate(270deg);
     }
     #non-nav {
         min-height: unset;

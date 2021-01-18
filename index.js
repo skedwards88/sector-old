@@ -153,6 +153,15 @@ let board
 let overlay
 let player_color
 
+function setColor(element, color, underColor = null) {
+    if (underColor) {
+        element.style.backgroundColor = "var(--" + color + "-on-" + underColor + ")"
+
+    } else {
+        element.style.backgroundColor = "var(--" + color + ")"
+    }
+}
+
 // Setup Game
 function setUpGame() {
 
@@ -181,63 +190,69 @@ function setUpGame() {
     board[5][5] = starting_tile.quadrants[1][1]
     board.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("row" + row_index + "col" + column_index);
-        element.style.backgroundColor = square.color;
+        setColor(element, square.color)
     }))
 
     // Draw one for offer, update overlay and render
     overlay.tile = deck.pop();
     overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-        element.style.backgroundColor = square.color;
+        setColor(element, square.color);
     }))
 
     // update # remaining in draw pile
-    document.getElementById("deck").textContent = deck.length
+    document.getElementById("offer_row0col0").textContent = ""
 
-        // Disable the move buttons except for down
-        document.getElementById("up").setAttribute("disabled", "")
-        document.getElementById("left").setAttribute("disabled", "")
-        document.getElementById("right").setAttribute("disabled", "")
-        document.getElementById("left_up").setAttribute("disabled", "")
-        document.getElementById("right_up").setAttribute("disabled", "")
-        document.getElementById("left_down").setAttribute("disabled", "")
-        document.getElementById("right_down").setAttribute("disabled", "")
-    
-
+    // Disable the move buttons except for the ones to enter the board
+    document.getElementById("left").setAttribute("disabled", "")
+    document.getElementById("right").setAttribute("disabled", "")
+    document.getElementById("down").setAttribute("disabled", "")
+    document.getElementById("left_down").setAttribute("disabled", "")
+    document.getElementById("right_down").setAttribute("disabled", "")
 }
 
 setUpGame()
 
+function moveOnToBoard(row_increment, column_increment) {
+
+
+}
+
 function move(row_increment, column_increment) {
 
-    // Clear the styling from the old overlay position
-    if (overlay.row !== null && overlay.column !== null) {
+    if (overlay.row === null) {
+        // clear the offer styling
+        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+            let element = document.getElementById("offer_row" + row_index + "col" + column_index);
+            setColor(element, "transparent")
+        }))
+
+        // Update overlay position
+        overlay.row = 8; // Row is always 8 when moving onto the board
+        overlay.column = 4 + column_increment;
+    } else {
+        // Clear the styling from the old overlay position
         overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let row = overlay.row + row_index;
             let column = overlay.column + column_index;
             let element = document.getElementById("row" + row + "col" + column);
-            element.style.backgroundColor = board[row][column].color;
+            setColor(element, board[row][column].color)
         }))
+
+        // Update overlay position
+        overlay.row += row_increment;
+        overlay.column += column_increment;
     }
 
-    // If moving onto the board, clear the offer styling
-    if (overlay.row === null) {
-        overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-            let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            element.style.backgroundColor = "black";
-        }))
-    }
+    document.getElementById("offer_row1col0").textContent = deck.length + " remaining"
 
-    // Update overlay position
-    overlay.row === null ? overlay.row = 0 : overlay.row += row_increment;
-    overlay.column === null ? overlay.column = 0 : overlay.column += column_increment;
 
     // Update square styling with the new overlay position
     overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let row = overlay.row + row_index;
         let column = overlay.column + column_index;
         let element = document.getElementById("row" + row + "col" + column);
-        element.style.backgroundColor = square.color;
+        setColor(element, square.color)
     }))
 
     // If it is invalid to move in a direction, inactivate those move buttons
@@ -267,7 +282,7 @@ function rotate() {
     if (overlay.row === null) {
         overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            element.style.backgroundColor = square.color;
+            setColor(element, square.color)
         }))
 
     } else {
@@ -275,11 +290,11 @@ function rotate() {
             let row = overlay.row + row_index;
             let column = overlay.column + column_index;
             let element = document.getElementById("row" + row + "col" + column);
-            element.style.backgroundColor = square.color;
+            setColor(element, square.color)
         }))
+        validatePlacement()
     }
 
-    validatePlacement()
 }
 
 function validatePlacement() {
@@ -356,18 +371,16 @@ function endTurn() {
     overlay.tile = deck.pop();
     overlay.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-        element.style.backgroundColor = square.color;
+        setColor(element, square.color)
     }))
 
     // update # remaining in draw pile
-    document.getElementById("deck").textContent = deck.length
+    document.getElementById("offer_row0col0").textContent = ""
 
-    // Disable the move buttons except for down
-    document.getElementById("up").setAttribute("disabled", "")
+    // Disable the move buttons except for the ones to enter the board
     document.getElementById("left").setAttribute("disabled", "")
     document.getElementById("right").setAttribute("disabled", "")
-    document.getElementById("left_up").setAttribute("disabled", "")
-    document.getElementById("right_up").setAttribute("disabled", "")
+    document.getElementById("down").setAttribute("disabled", "")
     document.getElementById("left_down").setAttribute("disabled", "")
     document.getElementById("right_down").setAttribute("disabled", "")
 
