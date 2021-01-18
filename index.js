@@ -1,7 +1,10 @@
 // TODO
 // input tiles
-// 
+// how to import. then move other components to separate files
+// scoring
 // let arrow keys control nav buttons
+// desktop styling
+// rules
 
 // import { tiles } from './tiles.js'
 // import { shuffleArray } from './shuffle.js'
@@ -206,6 +209,14 @@ function setUpGame() {
     document.getElementById("down").setAttribute("disabled", "")
     document.getElementById("left_down").setAttribute("disabled", "")
     document.getElementById("right_down").setAttribute("disabled", "")
+    document.getElementById("end_turn_button").setAttribute("disabled", "");
+    document.getElementById("score_button").setAttribute("disabled", "");
+
+    document.getElementById("up").removeAttribute("disabled");
+    document.getElementById("left_up").removeAttribute("disabled");
+    document.getElementById("right_up").removeAttribute("disabled");
+    document.getElementById("rotate").removeAttribute("disabled");
+
 }
 
 setUpGame()
@@ -228,7 +239,7 @@ function move(row_increment, column_increment) {
         offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let row = offer.row + row_index;
             let column = offer.column + column_index;
-            let element = document.getElementById("row" + row + "col" + column+"overlay");
+            let element = document.getElementById("row" + row + "col" + column + "overlay");
             element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
         }))
 
@@ -244,7 +255,7 @@ function move(row_increment, column_increment) {
     offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let row = offer.row + row_index;
         let column = offer.column + column_index;
-        let element = document.getElementById("row" + row + "col" + column+"overlay");
+        let element = document.getElementById("row" + row + "col" + column + "overlay");
         element.classList.add(square.color)
         if (square.symbol) element.classList.add(square.symbol)
     }))
@@ -285,7 +296,7 @@ function rotate() {
         offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let row = offer.row + row_index;
             let column = offer.column + column_index;
-            let element = document.getElementById("row" + row + "col" + column+"overlay");
+            let element = document.getElementById("row" + row + "col" + column + "overlay");
             element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
             element.classList.add(square.color)
             if (square.symbol) element.classList.add(square.symbol)
@@ -340,12 +351,12 @@ function endTurn() {
         board[row][column].color = square.color
         board[row][column].symbol = square.symbol
         // and transfer the style to the board
-        let element = document.getElementById("row" + row + "col" + column+"played");
+        let element = document.getElementById("row" + row + "col" + column + "played");
         element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
         element.classList.add(square.color)
         if (square.symbol) element.classList.add(square.symbol)
         // and clear the overlay
-        element = document.getElementById("row" + row + "col" + column+"overlay");
+        element = document.getElementById("row" + row + "col" + column + "overlay");
         element.classList.remove(square.color)
         element.classList.remove(square.symbol)
     }))
@@ -392,6 +403,14 @@ function endTurn() {
     document.getElementById("down").setAttribute("disabled", "")
     document.getElementById("left_down").setAttribute("disabled", "")
     document.getElementById("right_down").setAttribute("disabled", "")
+    document.getElementById("end_turn_button").setAttribute("disabled", "");
+    document.getElementById("score_button").setAttribute("disabled", "");
+
+    document.getElementById("up").removeAttribute("disabled");
+    document.getElementById("left_up").removeAttribute("disabled");
+    document.getElementById("right_up").removeAttribute("disabled");
+    document.getElementById("rotate").removeAttribute("disabled");
+
 
     // Switch player color
     player_color === 'red' ? player_color = 'blue' : player_color = 'red'
@@ -407,9 +426,9 @@ function endTurnAndScore() {
 
 function newGame() {
     board.forEach((row, row_index) => row.forEach((square, column_index) => {
-        let element = document.getElementById("row" + row_index + "col" + column_index+"played");
+        let element = document.getElementById("row" + row_index + "col" + column_index + "played");
         element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
-        element = document.getElementById("row" + row_index + "col" + column_index+"overlay");
+        element = document.getElementById("row" + row_index + "col" + column_index + "overlay");
         element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
     }))
     document.getElementById("offer_row1col0").textContent = ""

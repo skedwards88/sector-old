@@ -18,10 +18,11 @@
     --blue-button: radial-gradient(ellipse at 20% 20%, #bdbce9 0%, rgb(95, 104, 230) 50%, rgb(37, 17, 148) 100%);
     --blue-disabled: radial-gradient(ellipse at 20% 20%, #bdbce9 0%, rgb(95, 104, 230) 50%, rgb(15, 5, 70) 100%);
     background-color: black;
+    background-image: url(./images/stars.svg);
+
 }
 
 #game {
-    background-color: black;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -37,6 +38,8 @@
     grid-template-rows: repeat(10, var(--quad));
     justify-content: center;
     border: 1px solid white;
+    background-color: black;
+
 }
 
 .section {
@@ -99,6 +102,8 @@
 #controls {
     display: flex;
     flex-direction: row;
+    background-color: black;
+
 }
 
 button {
