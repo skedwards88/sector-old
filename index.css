@@ -19,14 +19,12 @@
     --blue-disabled: radial-gradient(ellipse at 20% 20%, #bdbce9 0%, rgb(95, 104, 230) 50%, rgb(15, 5, 70) 100%);
     background-color: black;
     background-image: url(./images/stars.svg);
-
 }
 
 #game {
     width: 100%;
     display: flex;
     flex-direction: column;
-    border: 5px solid black;
     font-family: monospace;
     font-weight: bold;
     text-align: center;
@@ -39,7 +37,8 @@
     justify-content: center;
     border: 1px solid white;
     background-color: black;
-
+    width: fit-content;
+    align-self: center;
 }
 
 .section {
@@ -90,6 +89,10 @@
 .square.blue{
     background-color: blue; 
 }
+.square.black{
+    background-color: black; 
+}
+
 
 .overlay.red {
     background-color: rgba(255,0,0,0.7);
@@ -98,12 +101,15 @@
 .overlay.blue {
     background-color: rgba(0,0,255,0.7);
 }
+.overlay.black {
+    background-color: rgba(0,0,0,0.7);
+}
 
 #controls {
     display: flex;
     flex-direction: row;
     background-color: black;
-
+    align-self: center;
 }
 
 button {
@@ -127,13 +133,17 @@ button:disabled {
     grid-template-columns: repeat(3, var(--nav));
     grid-template-rows: repeat(3, var(--nav));
     grid-gap: 2px;
+    height: fit-content;
+    width: fit-content;
+    align-self: center;
 }
 
 #non-nav {
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: calc(var(--nav) * 1.2);
+    font-size: calc(var(--nav) * 0.2);
 }
 
 #offer {
@@ -165,7 +175,7 @@ button:disabled {
         --quad: 9vh;
         --nav: 20vh;
         }
-    #game{
+    #game {
         display: flex;
         flex-direction: row;
     }
@@ -183,9 +193,30 @@ button:disabled {
         min-height: unset;
         width: unset;
         display: grid;
-        grid-template-columns: repeat(2, 30vh);
-        grid-template-rows: repeat(2, 15vh);
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, calc(var(--nav) * 0.75));
         margin: 0;
     }
 }
 
+
+/* Portrait, more square than 2/3 w/h */
+@media (min-aspect-ratio: 2/3) and (orientation: portrait) {
+    :root {
+        --quad: 5vw;
+        --nav: 10vh;
+    }
+    #game {
+        /* background-color: green; */
+    }
+}
+/* Landscape, more square than 3/2 w/h */
+@media (max-aspect-ratio: 3/2) and (orientation: landscape) {
+    :root {
+        --quad: 5vh;
+        --nav: 10vh;
+        }
+    #game {
+        /* background-color: red; */
+    }
+}

@@ -5,6 +5,10 @@
 // let arrow keys control nav buttons
 // desktop styling
 // rules
+// border around active tile
+// end turn and score
+// make navigation icons images instead or html symbols
+// fint size should scale with screen
 
 // import { tiles } from './tiles.js'
 // import { shuffleArray } from './shuffle.js'
@@ -43,88 +47,41 @@ class Quadrant {
 }
 
 class Tile {
-    constructor({ quadrants }) {
+    constructor({ id, quadrants }) {
+        this.id = id;
         this.quadrants = quadrants;
     }
 }
 
 const tiles = [
     new Tile({
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: "moon"
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: "star"
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "whirl"
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
+        id: 1,
         quadrants: [
             [
                 new Quadrant({
                     color: "blue",
                     symbol: "moon"
                 }),
-                new Quadrant({
-                    color: "red",
-                    symbol: "moon"
-                })
-            ],
-            [
                 new Quadrant({
                     color: "red",
                     symbol: "planet"
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: "whirl"
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: "moon"
                 })
             ],
             [
                 new Quadrant({
-                    color: "red",
-                    symbol: "whirl"
+                    color: "black",
+                    symbol: null
                 }),
                 new Quadrant({
                     color: "blue",
-                    symbol: null
+                    symbol: "planet"
                 })
             ]
         ]
     }),
 
     new Tile({
+        id: 2,
         quadrants: [
             [
                 new Quadrant({
@@ -132,8 +89,8 @@ const tiles = [
                     symbol: "star"
                 }),
                 new Quadrant({
-                    color: "red",
-                    symbol: "star"
+                    color: "black",
+                    symbol: null
                 })
             ],
             [
@@ -143,6 +100,56 @@ const tiles = [
                 }),
                 new Quadrant({
                     color: "blue",
+                    symbol: "star"
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "red",
+                    symbol: "whirl"
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: "moon"
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "red",
+                    symbol: "whirl"
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "red",
+                    symbol: "star"
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: "star"
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: "planet"
+                }),
+                new Quadrant({
+                    color: "black",
                     symbol: null
                 })
             ]
@@ -228,7 +235,7 @@ function move(row_increment, column_increment) {
         // clear the offer styling
         offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
+            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
         }))
 
         // Update offer position
@@ -240,7 +247,7 @@ function move(row_increment, column_increment) {
             let row = offer.row + row_index;
             let column = offer.column + column_index;
             let element = document.getElementById("row" + row + "col" + column + "overlay");
-            element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
+            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
         }))
 
         // Update offer position
@@ -287,7 +294,7 @@ function rotate() {
     if (offer.row === null) {
         offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
+            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
             element.classList.add(square.color)
             if (square.symbol) element.classList.add(square.symbol)
         }))
@@ -297,7 +304,7 @@ function rotate() {
             let row = offer.row + row_index;
             let column = offer.column + column_index;
             let element = document.getElementById("row" + row + "col" + column + "overlay");
-            element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
+            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
             element.classList.add(square.color)
             if (square.symbol) element.classList.add(square.symbol)
         }))
@@ -352,7 +359,7 @@ function endTurn() {
         board[row][column].symbol = square.symbol
         // and transfer the style to the board
         let element = document.getElementById("row" + row + "col" + column + "played");
-        element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
+        element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
         element.classList.add(square.color)
         if (square.symbol) element.classList.add(square.symbol)
         // and clear the overlay
@@ -427,9 +434,9 @@ function endTurnAndScore() {
 function newGame() {
     board.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("row" + row_index + "col" + column_index + "played");
-        element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
+        element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
         element = document.getElementById("row" + row_index + "col" + column_index + "overlay");
-        element.classList.remove("red", "blue", "moon", "star", "planet", "whirl")
+        element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
     }))
     document.getElementById("offer_row1col0").textContent = ""
 
