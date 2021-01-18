@@ -3,133 +3,126 @@
     --planet: "\00a5";
     --whirl: "\00a3";
     --moon: "\00a4";
-    --red: rgb(200, 0, 0);
-    --blue: rgb(0, 0, 200);
+    --red: rgb(148, 17, 17);
+    --blue: rgb(37, 17, 148);
     --black: rgb(0, 0, 0);
     --red-on-blue: rgb(160, 0, 60);
     --red-on-black: rgb(100, 0, 0);
     --blue-on-red: rgb(60, 0, 160);
     --blue-on-black: rgb(0, 0, 100);
-    /* --quad-size: 30px; fallback fallback (if clamp and vmin are not supported) */
-    /* --quad-size: 8vh;  fallback (if clamp is not supported) */
-    --quad-size: 9vh;
-    --button-size: 15vh;
-}
-
- @media (orientation: landscape) { 
-    #game{
-        background-color: silver;
-        display: flex;
-        flex-direction: row;
-    }
-  }
-
-.reg_button {
-    padding: 5px;
-    margin: 3px;
+    --quad: 9vw;
+    --nav: 20vw;
+    --red-button: radial-gradient(ellipse at 20% 20%, #e9bcbc 0%, rgb(201, 61, 61) 50%, rgb(148, 17, 17) 100%);
+    --red-disabled: radial-gradient(ellipse at 20% 20%, #e9bcbc 0%, rgb(201, 61, 61) 50%, rgb(83, 8, 8) 100%);
+    --blue-button: radial-gradient(ellipse at 20% 20%, #bdbce9 0%, rgb(95, 104, 230) 50%, rgb(37, 17, 148) 100%);
+    --blue-disabled: radial-gradient(ellipse at 20% 20%, #bdbce9 0%, rgb(95, 104, 230) 50%, rgb(15, 5, 70) 100%);
+    background-color: black;
 }
 
 #game {
-    /* padding: 20px; */
-    font-size: xx-large;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
+    background-color: black;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    /* background-color: silver; */
+    border: 5px solid black;
+    font-family: monospace;
+    font-weight: bold;
+    text-align: center;
 }
 
 #board {
     display: grid;
-    /* margin: calc(var(--quad-size) / 2) 0; */
-    grid-template-columns: repeat(10, 100fr);
-    width: 50px;
+    grid-template-columns: repeat(10, var(--quad));
+    grid-template-rows: repeat(10, var(--quad));
+    justify-content: center;
+    border: 1px solid white;
 }
 
 .square {
-    /* width: var(--quad-size);
-    height: var(--quad-size); */
     background-color: black;
-}
-
-#row4col4 {
-    background-color: var(--blue);
-}
-#row4col5 {
-    background-color: var(--blue);
-}
-#row5col4 {
-    background-color: var(--red);
-}
-#row5col5 {
-    background-color: var(--red);
-}
-
-#row4col4::after {
-    /* content: var(--star); */
-}
-#row4col5::after {
-    /* content: var(--planet); */
-}
-#row5col4::after {
-    /* content: var(--whirl); */
-}
-#row5col5::after {
-    /* content: var(--moon); */
-}
-
-#navigation {
-    display: grid;
-    grid-template-columns: repeat(3, var(--button-size));
-}
-
-.control_button {
-    width: var(--button-size);
-    height: var(--button-size);
-    font-weight: bold;
-}
-
-#offer {
-    display: grid;
-    grid-template-columns: repeat(2, var(--quad-size));
-    /* border: 3px solid blue; */
-    justify-content: center;
-    margin: 3px;
-}
-
-#unplayed {
-    display: flex;
-    flex-direction: row;
+    width: var(--quad);
+    height: var(--quad);
 }
 
 #controls {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+button {
+    all: unset;
+    border-radius: 5px;
+    flex: 1;
+    margin: 0 0 2px 3px;
+    background: var(--red-button);
+}
+
+button:active {
+    background: var(--red-disabled);
+}
+
+button:disabled {
+    opacity: .6;
+}
+
+#navigation {
+    display: grid;
+    grid-template-columns: repeat(3, var(--nav));
+    grid-template-rows: repeat(3, var(--nav));
+    grid-gap: 2px;
 }
 
 #non-nav {
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-
-}
-#end_turn {
-    display: flex;
-    flex-direction: column;
-
+    width: 100%;
 }
 
-#new_game_and_rules {
-    display: flex;
-    flex-direction: column;
-
+#offer {
+    display: grid;
+    grid-template-columns: repeat(2, var(--quad));
+    justify-content: center;
+    margin: 3px;
+    align-content: center;
 }
 
-#offer_q1 {
-    background-color: red;
+.control_button {
+    background-color: silver;
+}
+#left_up {
+    border-radius: 10px 0 0 0;
+}
+#right_up {
+    border-radius: 0 10px 0 0;
+}
+#right_down {
+    border-radius: 0 0 10px 0;
+}
+#left_down {
+    border-radius: 0 0 0 10px;
 }
 
-#offer_q1::after {
-    content: var(--whirl);
+@media (orientation: landscape) { 
+    :root {
+        --quad: 9vh;
+        --nav: 20vh;
+        }
+    #game{
+        display: flex;
+        flex-direction: row;
+    }
+    #controls {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    #non-nav {
+        min-height: unset;
+        width: unset;
+        display: grid;
+        grid-template-columns: repeat(2, 30vh);
+        grid-template-rows: repeat(2, 15vh);
+        margin: 0;
+    }
 }
+
