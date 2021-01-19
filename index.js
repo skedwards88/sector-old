@@ -7,8 +7,6 @@
 // rules
 // border around active tile
 // end turn and score
-// make navigation icons images instead or html symbols
-// fint size should scale with screen
 
 // import { tiles } from './tiles.js'
 // import { shuffleArray } from './shuffle.js'
@@ -161,7 +159,6 @@ let deck
 let board
 let board_overlay
 let offer
-let player_color
 
 // Setup Game
 function setUpGame() {
@@ -184,7 +181,6 @@ function setUpGame() {
         column: null,
         tile: null
     }
-    player_color = 'blue'
 
     // Shuffle tiles
     deck = tiles.slice();
@@ -420,7 +416,8 @@ function endTurn() {
 
 
     // Switch player color
-    player_color === 'red' ? player_color = 'blue' : player_color = 'red'
+    buttons = document.getElementsByTagName("button")
+    Array.from(buttons).forEach(button => button.classList.toggle("player2"))
 }
 
 function score() {

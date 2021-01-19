@@ -7,16 +7,12 @@
     --blue: rgb(37, 17, 148);
     --black: rgb(0, 0, 0);
     --transparent: transparent;
-    --red-on-blue: rgb(160, 0, 60);
-    --red-on-black: rgb(100, 0, 0);
-    --blue-on-red: rgb(60, 0, 160);
-    --blue-on-black: rgb(0, 0, 100);
     --quad: 9vw;
     --nav: 20vw;
     --red-button: radial-gradient(ellipse at 20% 20%, #e9bcbc 0%, rgb(201, 61, 61) 50%, rgb(148, 17, 17) 100%);
-    --red-disabled: radial-gradient(ellipse at 20% 20%, #e9bcbc 0%, rgb(201, 61, 61) 50%, rgb(83, 8, 8) 100%);
+    --red-active: radial-gradient(ellipse at 20% 20%, #e9bcbc 0%, rgb(201, 61, 61) 50%, rgb(83, 8, 8) 100%);
     --blue-button: radial-gradient(ellipse at 20% 20%, #bdbce9 0%, rgb(95, 104, 230) 50%, rgb(37, 17, 148) 100%);
-    --blue-disabled: radial-gradient(ellipse at 20% 20%, #bdbce9 0%, rgb(95, 104, 230) 50%, rgb(15, 5, 70) 100%);
+    --blue-active: radial-gradient(ellipse at 20% 20%, #bdbce9 0%, rgb(95, 104, 230) 50%, rgb(15, 5, 70) 100%);
     background-color: black;
     background-image: url(./images/stars.svg);
 }
@@ -93,7 +89,6 @@
     background-color: black; 
 }
 
-
 .overlay.red {
     background-color: rgba(255,0,0,0.7);
 }
@@ -117,15 +112,23 @@ button {
     border-radius: 5px;
     flex: 1;
     margin: 0 0 2px 3px;
+    background: var(--blue-button);
+}
+
+button.player2 {
     background: var(--red-button);
 }
 
 button:active {
-    background: var(--red-disabled);
+    background: var(--blue-active);
+}
+button.player2:active {
+    background: var(--red-active);
 }
 
 button:disabled {
     opacity: .6;
+    color: white;
 }
 
 #navigation {
@@ -154,8 +157,10 @@ button:disabled {
     align-content: center;
 }
 
-.control_button {
-}
+/* #offer_row0col0 {
+    border: solid white;
+    border-width: 3px 0 0 3px;
+} */
 
 #left_up {
     border-radius: 10px 5px 5px 5px;
