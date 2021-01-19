@@ -155,19 +155,55 @@ button:disabled {
 }
 
 .control_button {
-    background-color: silver;
 }
+
 #left_up {
-    border-radius: 10px 0 0 0;
+    border-radius: 10px 5px 5px 5px;
 }
 #right_up {
-    border-radius: 0 10px 0 0;
-}
-#right_down {
-    border-radius: 0 0 10px 0;
+    border-radius: 5px 10px 5px 5px;
 }
 #left_down {
-    border-radius: 0 0 0 10px;
+    border-radius: 5px 5px 5px 10px;
+}
+#right_down {
+    border-radius: 5px 5px 10px 5px;
+}
+
+.nav_img {
+    background-image: url(./images/move.svg); 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    width: var(--nav);
+    height: var(--nav);
+}
+
+#left_up_img {
+    transform: rotate(135deg);
+}
+#up_img {
+    transform: rotate(180deg);
+}
+#right_up_img {
+    transform: rotate(225deg);
+}
+#left_img {
+    transform: rotate(90deg);
+}
+#right_img {
+    transform: rotate(270deg);
+}
+#left_down_img {
+    transform: rotate(45deg);
+}
+#right_down_img {
+    transform: rotate(315deg);
+}
+#rotate_img {
+    background-image: url(./images/rotate.svg); 
+    background-size: 60%;
+
 }
 
 @media (orientation: landscape) { 
