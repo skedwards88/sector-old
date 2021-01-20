@@ -157,6 +157,26 @@ button:disabled {
     align-content: center;
 }
 
+.offer_row0_col0 {
+    border-width: 3px 0 0 3px;
+    border-color: white;
+    border-style: solid;
+}
+.offer_row0_col1 {
+    border-width: 3px 3px 0 0;
+    border-color: white;
+    border-style: solid;
+}
+.offer_row1_col0 {
+    border-width: 0 0 3px 3px;
+    border-color: white;
+    border-style: solid;
+}
+.offer_row1_col1 {
+    border-width: 0 3px 3px 0;
+    border-color: white;
+    border-style: solid;
+}
 /* #offer_row0col0 {
     border: solid white;
     border-width: 3px 0 0 3px;

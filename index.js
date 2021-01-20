@@ -3,9 +3,7 @@
 // how to import. then move other components to separate files
 // scoring
 // let arrow keys control nav buttons
-// desktop styling
 // rules
-// border around active tile
 // end turn and score
 
 // import { tiles } from './tiles.js'
@@ -243,7 +241,19 @@ function move(row_increment, column_increment) {
             let row = offer.row + row_index;
             let column = offer.column + column_index;
             let element = document.getElementById("row" + row + "col" + column + "overlay");
-            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
+            element.classList.remove(
+                "red",
+                "blue",
+                "black",
+                "moon",
+                "star",
+                "planet",
+                "whirl",
+                "offer_row0_col0",
+                "offer_row0_col1",
+                "offer_row1_col0",
+                "offer_row1_col1"
+            )
         }))
 
         // Update offer position
@@ -261,6 +271,7 @@ function move(row_increment, column_increment) {
         let element = document.getElementById("row" + row + "col" + column + "overlay");
         element.classList.add(square.color)
         if (square.symbol) element.classList.add(square.symbol)
+        element.classList.add("offer_row"+row_index+"_col"+column_index)
     }))
 
     // If it is invalid to move in a direction, inactivate those move buttons
@@ -362,6 +373,12 @@ function endTurn() {
         element = document.getElementById("row" + row + "col" + column + "overlay");
         element.classList.remove(square.color)
         element.classList.remove(square.symbol)
+        element.classList.remove(
+            "offer_row0_col0",
+            "offer_row0_col1",
+            "offer_row1_col0",
+            "offer_row1_col1"
+        )
     }))
 
     // If no tiles remain, the game is over
