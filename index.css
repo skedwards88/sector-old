@@ -149,6 +149,13 @@ button:disabled {
     font-size: calc(var(--nav) * 0.2);
 }
 
+#score {
+    color: white;
+    flex: 1;
+    margin: 0 0 2px 3px;
+    display: flex;
+    align-items: center;
+}
 #offer {
     display: grid;
     grid-template-columns: repeat(2, var(--quad));

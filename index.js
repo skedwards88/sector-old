@@ -1,10 +1,8 @@
 // TODO
 // input tiles
 // how to import. then move other components to separate files
-// scoring
 // let arrow keys control nav buttons
 // rules
-// end turn and score
 
 // import { tiles } from './tiles.js'
 // import { shuffleArray } from './shuffle.js'
@@ -511,10 +509,14 @@ function endTurnAndScore() {
     endTurn();
 
     score = calculateScore(playerColor == 'blue' ? 'red' : 'blue')
-    console.log('score: ',score)
 
     // Now, end turn and score disappears, replaced by "score to beat"
-
+    let but = document.getElementById('score_button')
+    let newdiv = document.createElement('div')
+    newdiv.innerText = 'Score to beat: '+score;
+    newdiv.setAttribute('class', 'reg_button')
+    newdiv.setAttribute('id', 'score')
+    but.replaceWith(newdiv)
     
 }
 
