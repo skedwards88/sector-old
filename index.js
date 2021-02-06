@@ -3,6 +3,7 @@
 // how to import. then move other components to separate files
 // let arrow keys control nav buttons
 // rules
+// jslint
 
 // import { tiles } from './tiles.js'
 // import { shuffleArray } from './shuffle.js'
@@ -159,11 +160,11 @@ let scores = {
     red:null,
     blue:null
 }
-onFirstPlayer = true
+let onFirstPlayer = true
 function getPlayerColor(onFirstPlayer) {
     return onFirstPlayer ? "blue" : "red"
 }
-
+let currentRule = 1
 
 // Setup Game
 function setUpGame() {
@@ -553,4 +554,25 @@ function newGame() {
     }))
 
     setUpGame()
+}
+
+function toggleRules() {
+    
+    let rules = document.getElementById("rules");
+    rules.classList.toggle("hidden");
+    document.getElementById("rule_"+currentRule).classList.add("hidden");
+    document.getElementById("rule_1").classList.remove("hidden");
+    currentRule = 1
+}
+
+function changeRule(increment) {
+    document.getElementById("rule_"+currentRule).classList.add("hidden");
+    document.getElementById("rule_"+(currentRule+increment)).classList.remove("hidden");
+    
+    if (!document.getElementById("rule_"+(currentRule+increment+increment))) {
+        document.getElementById("rule+"+increment).classList.add("hidden")
+    } else {
+        document.getElementById("rule+"+(-1*increment)).classList.remove("hidden")
+    }
+    currentRule += increment
 }

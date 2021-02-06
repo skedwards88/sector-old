@@ -309,3 +309,12 @@ button:disabled {
 .hidden {
     display: none;
 }
+
+.modal {
+    position: absolute;
+    background-color: blanchedalmond;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
