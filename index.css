@@ -44,6 +44,15 @@
     grid-column-start: 1;
     grid-row-start: 1;
 }
+#deck {
+    align-self: center;
+    display: grid;
+}
+#deck > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
 
 .square {
     width: var(--quad);
@@ -148,6 +157,11 @@ button:disabled {
     width: calc(var(--nav) * 1.2);
     font-size: calc(var(--nav) * 0.2);
 }
+#remaining {
+    color:white;
+    font-size: xx-large;
+    line-height: calc(var(--quad) * 2);
+}
 
 #score {
     color: white;
@@ -155,6 +169,9 @@ button:disabled {
     margin: 0 0 2px 3px;
     display: flex;
     align-items: center;
+}
+#score.hidden {
+    display: none;
 }
 #offer {
     display: grid;

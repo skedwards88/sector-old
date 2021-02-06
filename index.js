@@ -168,13 +168,14 @@ function getPlayerColor(onFirstPlayer) {
 // Setup Game
 function setUpGame() {
 
+    // The board starts off as a 10x10 grid of black squares
     board = Array(10).fill(Array(10).fill(null));
-    // board = Array.from({ length: 10 }, e => Array(10).fill(null))
     board = board.map(row => row.map(square => new Quadrant({
         color: "black",
         symbol: null
     })))
 
+    // The overlay (showing the active tile) starts off as a 10x10 grid of transparent squares
     board_overlay = Array(10).fill(Array(10).fill(null));
     board_overlay = board_overlay.map(row => row.map(square => new Quadrant({
         color: "transparent",
@@ -191,9 +192,8 @@ function setUpGame() {
     deck = tiles.slice();
     shuffleArray(deck);
 
-    // Put one in middle of board (populate board, render tile)
+    // Put one tile in middle of board (populate board, render tile)
     starting_tile = deck.pop();
-
     starting_tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let row = 4 + row_index;
         let column = 4 + column_index;
@@ -207,6 +207,7 @@ function setUpGame() {
     offer.tile = deck.pop();
     offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let element = document.getElementById("offer_row" + row_index + "col" + column_index);
+        element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
         element.classList.add(square.color)
         if (square.symbol) element.classList.add(square.symbol)
     }))
@@ -225,6 +226,11 @@ function setUpGame() {
     document.getElementById("right_up").removeAttribute("disabled");
     document.getElementById("rotate").removeAttribute("disabled");
 
+    let scorediv = document.getElementById('score')
+    scorediv.classList.add('hidden');
+
+    let end_turn_button = document.getElementById('score_button')
+    end_turn_button.classList.remove('hidden');
 }
 
 setUpGame()
@@ -268,7 +274,7 @@ function move(row_increment, column_increment) {
         offer.column += column_increment;
     }
 
-    document.getElementById("offer_row1col0").textContent = deck.length + " remaining"
+    document.getElementById("remaining").textContent = deck.length
 
 
     // Update square styling with the new offer position
@@ -420,12 +426,10 @@ function endTurn(doScoreAction = false) {
         scores[playerColor] = calculateScore(playerColor)
 
         // Now, end turn and score disappears, replaced by "score to beat"
-        let buttons = document.getElementById('non-nav')
-        let score_to_beat_div = document.createElement('div')
-        score_to_beat_div.innerText = 'Score to beat: ' + scores[playerColor];
-        score_to_beat_div.setAttribute('class', 'reg_button')
-        score_to_beat_div.setAttribute('id', 'score')
-        buttons.appendChild(score_to_beat_div);
+        let scorediv = document.getElementById('score')
+        scorediv.innerText = 'Score to beat: ' + scores[playerColor];
+        scorediv.classList.remove('hidden');
+
         let end_turn_button = document.getElementById('score_button')
         end_turn_button.classList.add('hidden');
 
@@ -456,9 +460,6 @@ function endTurn(doScoreAction = false) {
         if (square.symbol) element.classList.add(square.symbol)
 
     }))
-
-    // update # remaining in draw pile
-    document.getElementById("offer_row1col0").textContent = ""
 
     // Disable the move buttons except for the ones to enter the board
     document.getElementById("left").setAttribute("disabled", "")
@@ -550,7 +551,6 @@ function newGame() {
         element = document.getElementById("row" + row_index + "col" + column_index + "overlay");
         element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
     }))
-    document.getElementById("offer_row1col0").textContent = ""
 
     setUpGame()
 }

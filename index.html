@@ -119,12 +119,17 @@
             <div class="section"><div class="square played" id="row9col8played"></div><div class="square overlay" id="row9col8overlay"></div></div>
             <div class="section"><div class="square played" id="row9col9played"></div><div class="square overlay" id="row9col9overlay"></div></div>
         </div>
-        <div id="offer">
-            <div class="square offer" id="offer_row0col0"></div>
-            <div class="square offer" id="offer_row0col1"></div>
-            <div class="square offer" id="offer_row1col0"></div>
-            <div class="square offer" id="offer_row1col1"></div>
+
+        <div id="deck">
+            <div id="remaining"></div>
+            <div id="offer">
+                <div class="square offer" id="offer_row0col0"></div>
+                <div class="square offer" id="offer_row0col1"></div>
+                <div class="square offer" id="offer_row1col0"></div>
+                <div class="square offer" id="offer_row1col1"></div>
+            </div>
         </div>
+        
         <div id="controls">
             <div id="navigation">
                 <button class="control_button" id="left_up" onclick="move(-1, -1)"><div class="nav_img" id="left_up_img" ></div></button>
@@ -144,6 +149,7 @@
 
                     <button class="reg_button" id="end_turn_button" disabled onclick="endTurn()">End Turn</button>
                     <button class="reg_button" id="score_button" disabled onclick="endTurn(doScoreAction=true)">End Turn <br/>and Score</button>
+                    <div class="reg_button hidden" id="score"></div>
             </div>
         </div>
     </div>
