@@ -157,8 +157,8 @@ let board
 let board_overlay
 let offer
 let scores = {
-    red:null,
-    blue:null
+    red: null,
+    blue: null
 }
 let onFirstPlayer = true
 function getPlayerColor(onFirstPlayer) {
@@ -437,7 +437,7 @@ function endTurn(doScoreAction = false) {
     } else {
 
         // If the other player has already scored, check if the new score is equal or higher
-        if (scores[opponentColor]!==null) {
+        if (scores[opponentColor] !== null) {
             let new_score = calculateScore(playerColor)
             if (new_score >= scores[opponentColor]) {
                 scores[playerColor] = new_score
@@ -557,22 +557,22 @@ function newGame() {
 }
 
 function toggleRules() {
-    
+
     let rules = document.getElementById("rules");
     rules.classList.toggle("hidden");
-    document.getElementById("rule_"+currentRule).classList.add("hidden");
+    document.getElementById("rule_" + currentRule).classList.add("hidden");
     document.getElementById("rule_1").classList.remove("hidden");
     currentRule = 1
 }
 
 function changeRule(increment) {
-    document.getElementById("rule_"+currentRule).classList.add("hidden");
-    document.getElementById("rule_"+(currentRule+increment)).classList.remove("hidden");
-    
-    if (!document.getElementById("rule_"+(currentRule+increment+increment))) {
-        document.getElementById("rule+"+increment).classList.add("hidden")
+    document.getElementById("rule_" + currentRule).classList.add("hidden");
+    document.getElementById("rule_" + (currentRule + increment)).classList.remove("hidden");
+
+    if (!document.getElementById("rule_" + (currentRule + increment + increment))) {
+        document.getElementById("rule+" + increment).classList.add("hidden")
     } else {
-        document.getElementById("rule+"+(-1*increment)).classList.remove("hidden")
+        document.getElementById("rule+" + (-1 * increment)).classList.remove("hidden")
     }
     currentRule += increment
 }
