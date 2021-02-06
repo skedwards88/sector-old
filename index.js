@@ -155,7 +155,15 @@ let deck
 let board
 let board_overlay
 let offer
-let playerColor = 'blue'
+let scores = {
+    red:null,
+    blue:null
+}
+onFirstPlayer = true
+function getPlayerColor(onFirstPlayer) {
+    return onFirstPlayer ? "blue" : "red"
+}
+
 
 // Setup Game
 function setUpGame() {
@@ -270,7 +278,7 @@ function move(row_increment, column_increment) {
         let element = document.getElementById("row" + row + "col" + column + "overlay");
         element.classList.add(square.color)
         if (square.symbol) element.classList.add(square.symbol)
-        element.classList.add("offer_row"+row_index+"_col"+column_index)
+        element.classList.add("offer_row" + row_index + "_col" + column_index)
     }))
 
     // If it is invalid to move in a direction, inactivate those move buttons
@@ -355,7 +363,22 @@ function validatePlacement() {
     // }))
 }
 
-function endTurn() {
+function gameOver() {
+    // disable the buttons
+    document.getElementById("end_turn_button").setAttribute("disabled", "");
+    document.getElementById("score_button").setAttribute("disabled", "");
+    document.getElementById("up").setAttribute("disabled", "");
+    document.getElementById("down").setAttribute("disabled", "");
+    document.getElementById("left").setAttribute("disabled", "");
+    document.getElementById("right").setAttribute("disabled", "");
+    document.getElementById("left_up").setAttribute("disabled", "");
+    document.getElementById("right_up").setAttribute("disabled", "");
+    document.getElementById("left_down").setAttribute("disabled", "");
+    document.getElementById("right_down").setAttribute("disabled", "");
+    document.getElementById("rotate").setAttribute("disabled", "");
+}
+
+function endTurn(doScoreAction = false) {
 
     // Update the board variable 
     offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
@@ -380,23 +403,44 @@ function endTurn() {
         )
     }))
 
-    // If no tiles remain, the game is over
-    if (!deck.length) {
-        // disable the buttons
-        document.getElementById("end_turn_button").setAttribute("disabled", "");
-        document.getElementById("score_button").setAttribute("disabled", "");
-        document.getElementById("up").setAttribute("disabled", "");
-        document.getElementById("down").setAttribute("disabled", "");
-        document.getElementById("left").setAttribute("disabled", "");
-        document.getElementById("right").setAttribute("disabled", "");
-        document.getElementById("left_up").setAttribute("disabled", "");
-        document.getElementById("right_up").setAttribute("disabled", "");
-        document.getElementById("left_down").setAttribute("disabled", "");
-        document.getElementById("right_down").setAttribute("disabled", "");
-        document.getElementById("rotate").setAttribute("disabled", "");
+    let playerColor = getPlayerColor(onFirstPlayer)
+    let opponentColor = getPlayerColor(!onFirstPlayer)
 
+    // If no tiles remain, the game is over. Highest score wins.
+    if (!deck.length) {
+        scores[playerColor] = calculateScore(playerColor)
+        if (!scores[opponentColor]) {
+            scores[opponentColor] = calculateScore(opponentColor)
+        }
+        gameOver();
         return;
     };
+
+    if (doScoreAction) {
+        scores[playerColor] = calculateScore(playerColor)
+
+        // Now, end turn and score disappears, replaced by "score to beat"
+        let buttons = document.getElementById('non-nav')
+        let score_to_beat_div = document.createElement('div')
+        score_to_beat_div.innerText = 'Score to beat: ' + scores[playerColor];
+        score_to_beat_div.setAttribute('class', 'reg_button')
+        score_to_beat_div.setAttribute('id', 'score')
+        buttons.appendChild(score_to_beat_div);
+        let end_turn_button = document.getElementById('score_button')
+        end_turn_button.classList.add('hidden');
+
+    } else {
+
+        // If the other player has already scored, check if the new score is equal or higher
+        if (scores[opponentColor]!==null) {
+            let new_score = calculateScore(playerColor)
+            if (new_score >= scores[opponentColor]) {
+                scores[playerColor] = new_score
+                gameOver();
+                return;
+            }
+        }
+    }
 
     // Draw a new offer tile and reset the offer and render the offer
     offer = {
@@ -430,11 +474,10 @@ function endTurn() {
     document.getElementById("right_up").removeAttribute("disabled");
     document.getElementById("rotate").removeAttribute("disabled");
 
-
     // Switch player color
     buttons = document.getElementsByTagName("button")
     Array.from(buttons).forEach(button => button.classList.toggle("player2"))
-    playerColor == 'blue' ? playerColor = 'red' : playerColor = 'blue'
+    onFirstPlayer = !onFirstPlayer
 }
 
 class Cluster {
@@ -490,35 +533,15 @@ function findClusters(color, board) {
 }
 
 function calculateScore(color) {
-    console.log('scoring ', color)
-
     let boardCopy = JSON.parse(JSON.stringify(board))
 
     let clusters = findClusters(color, boardCopy)
-
-    console.log(clusters)
 
     let scores = clusters.map(cluster => cluster.score)
 
     return Math.max(...scores)
 }
 
-
-function endTurnAndScore() {
-
-    endTurn();
-
-    score = calculateScore(playerColor == 'blue' ? 'red' : 'blue')
-
-    // Now, end turn and score disappears, replaced by "score to beat"
-    let but = document.getElementById('score_button')
-    let newdiv = document.createElement('div')
-    newdiv.innerText = 'Score to beat: '+score;
-    newdiv.setAttribute('class', 'reg_button')
-    newdiv.setAttribute('id', 'score')
-    but.replaceWith(newdiv)
-    
-}
 
 function newGame() {
     board.forEach((row, row_index) => row.forEach((square, column_index) => {

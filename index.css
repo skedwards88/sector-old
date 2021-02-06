@@ -288,3 +288,7 @@ button:disabled {
         /* background-color: red; */
     }
 }
+
+.hidden {
+    display: none;
+}
