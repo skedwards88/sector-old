@@ -4,6 +4,11 @@
 // let arrow keys control nav buttons
 // rules
 // jslint
+//add notification for winner
+// add confirmation for new game
+// in landscape, also rotate offer
+// if click new game without end tur, clear tile outline
+// also outline offer
 
 // import { tiles } from './tiles.js'
 // import { shuffleArray } from './shuffle.js'
@@ -102,6 +107,189 @@ const tiles = [
     }),
 
     new Tile({
+        id: 3,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: "whirl"
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 4,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: "moon"
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "red",
+                    symbol: "moon"
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 5,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: "planet"
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: "planet"
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 6,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 7,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: "whirl"
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: "planet"
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "red",
+                    symbol: "moon"
+                }),
+                new Quadrant({
+                    color: "blue",
+                    symbol: "star"
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 8,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: "star"
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: "star"
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 9,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 10,
         quadrants: [
             [
                 new Quadrant({
@@ -111,6 +299,32 @@ const tiles = [
                 new Quadrant({
                     color: "red",
                     symbol: "moon"
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: "moon"
+                }),
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 11,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "black",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
                 })
             ],
             [
@@ -127,24 +341,51 @@ const tiles = [
     }),
 
     new Tile({
+        id: 12,
         quadrants: [
             [
                 new Quadrant({
                     color: "red",
-                    symbol: "star"
+                    symbol: "whirl"
                 }),
                 new Quadrant({
-                    color: "red",
-                    symbol: "star"
+                    color: "black",
+                    symbol: null
                 })
             ],
             [
                 new Quadrant({
                     color: "blue",
-                    symbol: "planet"
+                    symbol: "whirl"
                 }),
                 new Quadrant({
-                    color: "black",
+                    color: "red",
+                    symbol: "star"
+                })
+            ]
+        ]
+    }),
+
+    new Tile({
+        id: 13,
+        quadrants: [
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
+                    symbol: null
+                })
+            ],
+            [
+                new Quadrant({
+                    color: "blue",
+                    symbol: null
+                }),
+                new Quadrant({
+                    color: "red",
                     symbol: null
                 })
             ]
