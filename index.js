@@ -1,17 +1,8 @@
-// TODO
-
 // how to import. then move other components to separate files
 // let arrow keys control nav buttons
 // rules
 // jslint
 // add confirmation for new game
-// don't allow tile unless adjacent or overlapping
-
-// import { tiles } from './tiles.js'
-// import { shuffleArray } from './shuffle.js'
-
-// const tiles = require("./tiles")
-// const shuffleArray = require("./shuffle");
 
 // Swap each value in an array, starting at the end of the array, with a position equal or earlier in the array.
 function shuffleArray(array) {
