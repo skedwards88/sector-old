@@ -6,8 +6,6 @@
 // jslint
 // add confirmation for new game
 // don't allow tile unless adjacent or overlapping
-// debug the scores (saved data)
-// make background of board dark gray
 
 // import { tiles } from './tiles.js'
 // import { shuffleArray } from './shuffle.js'
@@ -410,10 +408,10 @@ let currentRule = 1
 // Setup Game
 function setUpGame() {
 
-    // The board starts off as a 10x10 grid of black squares
+    // The board starts off as a 10x10 grid of empty squares
     board = Array(10).fill(Array(10).fill(null));
     board = board.map(row => row.map(square => new Quadrant({
-        color: "black",
+        color: null,
         symbol: null
     })))
 
@@ -580,39 +578,49 @@ function rotate() {
 }
 
 function validatePlacement() {
-    // If the tile can't be placed, inactivate the "end turn" buttons
-    overlay_colors = offer.tile.quadrants.flat().map(quadrant => quadrant.color)
-    let row = offer.row;
-    let column = offer.column;
-    board_colors = [
+    // If blue is overlaid on red or vice versa, the placement is invalid
+    let overlay_colors = offer.tile.quadrants.flat().map(quadrant => quadrant.color);
+    let offsetsToCheckColor = [
         { row_offset: 0, column_offset: 0 }, { row_offset: 0, column_offset: 1 },
         { row_offset: 1, column_offset: 0 }, { row_offset: 1, column_offset: 1 }
-    ].map(offset => board[row + offset.row_offset][column + offset.column_offset].color)
-    valids = overlay_colors.map((color, index) => (
-        (board_colors[index] === 'red' && color === 'blue') || (board_colors[index] === 'blue' && color === 'red'))
+    ];
+    let row = offer.row;
+    let column = offer.column;
+    let board_colors = offsetsToCheckColor.map(offset => board[row + offset.row_offset][column + offset.column_offset].color);
+    let invalid_overlays = overlay_colors.filter((overlay_color, index) => (
+        (board_colors[index] === 'red' && overlay_color === 'blue') || (board_colors[index] === 'blue' && overlay_color === 'red'))
     )
-    v = valids.some(valid => valid)
-    if (v) {
+
+    // If none of the overlaid quadrants overlay or share and edge with the existing board quadrants, placement is invalid
+    let offsetsToCheckTouching = [
+        { row_offset: -1, column_offset: 0 },
+        { row_offset: -1, column_offset: 1 },
+        { row_offset: 0, column_offset: -1 },
+        { row_offset: 0, column_offset: 0 },
+        { row_offset: 0, column_offset: 1 },
+        { row_offset: 0, column_offset: 2 },
+        { row_offset: 1, column_offset:  -1 },
+        { row_offset: 1, column_offset:  0 },
+        { row_offset: 1, column_offset: 1 },
+        { row_offset: 1, column_offset: 2 },
+        { row_offset: 2, column_offset: 0 },
+        { row_offset: 2, column_offset: 1 },
+    ]
+    let touching = offsetsToCheckTouching.filter(offset => {
+            if (0<=(row + offset.row_offset) && (row + offset.row_offset)<10 && 0<=(column + offset.column_offset) &&(column + offset.column_offset)<10) {
+            return board[row + offset.row_offset][column + offset.column_offset].color
+            }
+        }
+        )
+
+    // If any overlaid colors are illegal or the overlay is not touching any existing quadrants, inactivate the "end turn" buttons
+    if (invalid_overlays.length !== 0 || touching.length === 0) {
         document.getElementById("end_turn_button").setAttribute("disabled", "");
         document.getElementById("score_button").setAttribute("disabled", "");
     } else {
         document.getElementById("end_turn_button").removeAttribute("disabled")
         document.getElementById("score_button").removeAttribute("disabled")
     }
-    // offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-    //     let row = offer.row + row_index;
-    //     let column = offer.column + column_index;
-    //     let overlay_color = square.color;
-    //     let tile_color = board[row][column].color;
-    //     if ((tile_color === 'red' && overlay_color === "blue") || (tile_color === 'blue' && overlay_color === "red")) {
-    //         document.getElementById("end_turn_button").setAttribute("disabled", "");
-    //         document.getElementById("score_button").setAttribute("disabled", "");
-    //         return;
-    //     } else {
-    //         document.getElementById("end_turn_button").removeAttribute("disabled")
-    //         document.getElementById("score_button").removeAttribute("disabled")
-    //     }
-    // }))
 }
 
 function gameOver() {
@@ -635,7 +643,7 @@ function gameOver() {
 
 function endTurn(doScoreAction = false) {
 
-    // Update the board variable 
+    // Update the board variable
     offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let row = offer.row + row_index;
         let column = offer.column + column_index;
