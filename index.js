@@ -452,6 +452,7 @@ function setUpGame() {
         element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
         element.classList.add(square.color)
         if (square.symbol) element.classList.add(square.symbol)
+        element.classList.add("offer_row" + row_index + "_col" + column_index)
     }))
 
     // Disable the move buttons except for the ones to enter the board
@@ -484,7 +485,10 @@ function move(row_increment, column_increment) {
         // clear the offer styling
         offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
-            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
+            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl","offer_row0_col0",
+            "offer_row0_col1",
+            "offer_row1_col0",
+            "offer_row1_col1")
         }))
 
         // Update offer position
@@ -700,6 +704,7 @@ function endTurn(doScoreAction = false) {
         let element = document.getElementById("offer_row" + row_index + "col" + column_index);
         element.classList.add(square.color)
         if (square.symbol) element.classList.add(square.symbol)
+        element.classList.add("offer_row" + row_index + "_col" + column_index)
 
     }))
 
@@ -791,7 +796,10 @@ function newGame() {
         let element = document.getElementById("row" + row_index + "col" + column_index + "played");
         element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
         element = document.getElementById("row" + row_index + "col" + column_index + "overlay");
-        element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
+        element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl", "offer_row0_col0",
+        "offer_row0_col1",
+        "offer_row1_col0",
+        "offer_row1_col1")
     }))
 
     setUpGame()
