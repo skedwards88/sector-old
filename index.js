@@ -1,14 +1,11 @@
 // TODO
-// input tiles
+
 // how to import. then move other components to separate files
 // let arrow keys control nav buttons
 // rules
 // jslint
-//add notification for winner
 // add confirmation for new game
-// in landscape, also rotate offer
-// if click new game without end tur, clear tile outline
-// also outline offer
+// don't allow tile unless adjacent or overlapping
 
 // import { tiles } from './tiles.js'
 // import { shuffleArray } from './shuffle.js'
@@ -394,6 +391,7 @@ const tiles = [
 ]
 
 let deck
+let winner
 let board
 let board_overlay
 let offer
@@ -628,6 +626,9 @@ function gameOver() {
     document.getElementById("left_down").setAttribute("disabled", "");
     document.getElementById("right_down").setAttribute("disabled", "");
     document.getElementById("rotate").setAttribute("disabled", "");
+    document.getElementById("gameOverText").innerText ="Red: "+scores.red+"\nBlue: "+scores.blue+"\nWinner: "+winner
+    document.getElementById("gameOver").classList.remove("hidden")
+
 }
 
 function endTurn(doScoreAction = false) {
@@ -662,8 +663,12 @@ function endTurn(doScoreAction = false) {
     if (!deck.length) {
         scores[playerColor] = calculateScore(playerColor)
         if (!scores[opponentColor]) {
-            scores[opponentColor] = calculateScore(opponentColor)
+            // If the other player still hasn't scored, score them
+            // In this case, ties win
+            scores[opponentColor] = calculateScore(opponentColor);
+            if (scores[opponentColor] == scores[playerColor]) (winner = "TIE");
         }
+        if (!winner) (winner = (scores[playerColor] >= scores[opponentColor]) ? playerColor : opponentColor);
         gameOver();
         return;
     };
@@ -686,6 +691,7 @@ function endTurn(doScoreAction = false) {
             let new_score = calculateScore(playerColor)
             if (new_score >= scores[opponentColor]) {
                 scores[playerColor] = new_score
+                winner = playerColor
                 gameOver();
                 return;
             }
@@ -802,14 +808,19 @@ function newGame() {
         "offer_row1_col1")
     }))
 
+    winner = null
+
     setUpGame()
 }
 
-function toggleRules() {
-
+function showRules() {
+    console.log("RULES")
+    // show the modal
     let rules = document.getElementById("rules");
-    rules.classList.toggle("hidden");
+    rules.classList.remove("hidden");
+    // hide the last viewed rule
     document.getElementById("rule_" + currentRule).classList.add("hidden");
+    // show the first rule
     document.getElementById("rule_1").classList.remove("hidden");
     currentRule = 1
 }
@@ -824,4 +835,8 @@ function changeRule(increment) {
         document.getElementById("rule+" + (-1 * increment)).classList.remove("hidden")
     }
     currentRule += increment
+}
+
+function closeModal(element) {
+    element.parentNode.classList.add("hidden")
 }

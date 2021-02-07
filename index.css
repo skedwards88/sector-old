@@ -321,3 +321,7 @@ button:disabled {
     left: 0;
     top: 0;
 }
+
+#gameOverText {
+    white-space: pre;
+}
