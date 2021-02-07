@@ -274,6 +274,9 @@ button:disabled {
     #navigation {
         transform: rotate(270deg);
     }
+    #offer {
+        transform: rotate(270deg);
+    }
     #non-nav {
         min-height: unset;
         width: unset;
