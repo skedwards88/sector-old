@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/skedwards88/sector/issues"
   },
-  "homepage": "https://github.com/skedwards88/sector#readme"
+  "homepage": "https://github.com/skedwards88/sector#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "jslint": "^0.12.1"
+  }
 }
