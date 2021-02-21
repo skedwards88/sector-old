@@ -460,8 +460,8 @@ function setUpGame() {
     document.getElementById("right_up").removeAttribute("disabled");
     document.getElementById("rotate").removeAttribute("disabled");
 
-    let scorediv = document.getElementById('score')
-    scorediv.classList.add('hidden');
+    let scoreDiv = document.getElementById('score')
+    scoreDiv.classList.add('hidden');
 
     let end_turn_button = document.getElementById('score_button')
     end_turn_button.classList.remove('hidden');
@@ -680,9 +680,9 @@ function endTurn(doScoreAction = false) {
         scores[playerColor] = calculateScore(playerColor)
 
         // Now, end turn and score disappears, replaced by "score to beat"
-        let scorediv = document.getElementById('score')
-        scorediv.innerText = 'Score to beat: ' + scores[playerColor];
-        scorediv.classList.remove('hidden');
+        let scoreDiv = document.getElementById('score')
+        scoreDiv.innerText = 'Score to beat: ' + scores[playerColor];
+        scoreDiv.classList.remove('hidden');
 
         let end_turn_button = document.getElementById('score_button')
         end_turn_button.classList.add('hidden');
