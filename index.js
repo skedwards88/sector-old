@@ -3,6 +3,8 @@
 // rules
 // jslint
 // add confirmation for new game
+// set max size of the buttons for large screen size
+// readme
 
 // Swap each value in an array, starting at the end of the array, with a position equal or earlier in the array.
 function shuffleArray(array) {
