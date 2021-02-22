@@ -6,382 +6,8 @@
 // set max size of the buttons for large screen size
 // readme
 
-// Swap each value in an array, starting at the end of the array, with a position equal or earlier in the array.
-function shuffleArray(array) {
-    for (let index = array.length - 1; index > 0; index--) {
-
-        // Get a random index from 0 to the current index of the array
-        // So for an array of length 3, the first round will be 0, 1, or 2, second round 0 or 1, and last round 0
-        // The values at this index and the current index will be swapped
-        let swapIndex = Math.floor(Math.random() * (index + 1));
-
-        // If the current index and index to swap are the same, move on to the next loop iteration
-        if (index === swapIndex) {
-            continue;
-        }
-
-        // Get the original value at index,
-        // set the value at the index to be the value at the swap index,
-        // then set the value at the swap index to be the original value at the index
-        let swapValue = array[index];
-        array[index] = array[swapIndex];
-        array[swapIndex] = swapValue;
-    }
-}
-
-class Quadrant {
-    constructor({ color, symbol }) {
-        this.color = color;
-        this.symbol = symbol;
-    }
-}
-
-class Tile {
-    constructor({ id, quadrants }) {
-        this.id = id;
-        this.quadrants = quadrants;
-    }
-}
-
-const tiles = [
-    new Tile({
-        id: 1,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "moon"
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: "planet"
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: "planet"
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 2,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: "star"
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "planet"
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: "star"
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 3,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "whirl"
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 4,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "moon"
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: "moon"
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 5,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "planet"
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: "planet"
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 6,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 7,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "whirl"
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: "planet"
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: "moon"
-                }),
-                new Quadrant({
-                    color: "blue",
-                    symbol: "star"
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 8,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: "star"
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "star"
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 9,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 10,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: "whirl"
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: "moon"
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "moon"
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 11,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: "whirl"
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 12,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "red",
-                    symbol: "whirl"
-                }),
-                new Quadrant({
-                    color: "black",
-                    symbol: null
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: "whirl"
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: "star"
-                })
-            ]
-        ]
-    }),
-
-    new Tile({
-        id: 13,
-        quadrants: [
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                })
-            ],
-            [
-                new Quadrant({
-                    color: "blue",
-                    symbol: null
-                }),
-                new Quadrant({
-                    color: "red",
-                    symbol: null
-                })
-            ]
-        ]
-    }),
-]
+import { shuffleArray } from "./shuffle.js";
+import { Quadrant, tiles } from "./tiles.js"
 
 let deck
 let winner
@@ -426,7 +52,7 @@ function setUpGame() {
     shuffleArray(deck);
 
     // Put one tile in middle of board (populate board, render tile)
-    starting_tile = deck.pop();
+    let starting_tile = deck.pop();
     starting_tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
         let row = 4 + row_index;
         let column = 4 + column_index;
@@ -468,6 +94,59 @@ function setUpGame() {
 }
 
 setUpGame()
+
+document.getElementById("rotate").addEventListener("click", function() {
+    rotate()
+});
+document.getElementById("left_up").addEventListener("click", function() {
+    move(-1, -1)
+});
+document.getElementById("up").addEventListener("click", function() {
+    move(-1, 0)
+});
+document.getElementById("right_up").addEventListener("click", function() {
+    move(-1, 1)
+});
+document.getElementById("left").addEventListener("click", function() {
+    move(0, -1)
+});
+document.getElementById("right").addEventListener("click", function() {
+    move(0, 1)
+});
+document.getElementById("left_down").addEventListener("click", function() {
+    move(1, -1)
+});
+document.getElementById("down").addEventListener("click", function() {
+    move(1, 0)
+});
+document.getElementById("right_down").addEventListener("click", function() {
+    move(1, 1)
+});
+document.getElementById("newGame").addEventListener("click", function() {
+    newGame()
+});
+document.getElementById("openRules").addEventListener("click", function() {
+    showRules()
+});
+document.getElementById("end_turn_button").addEventListener("click", function() {
+    endTurn()
+});
+document.getElementById("score_button").addEventListener("click", function() {
+    endTurn(true)
+});
+document.getElementById("closeRules").addEventListener("click", function() {
+    closeModal(this)
+});
+document.getElementById("rule+-1").addEventListener("click", function() {
+    changeRule(-1)
+});
+document.getElementById("rule+1").addEventListener("click", function() {
+    changeRule(1)
+});
+document.getElementById("closeGameOver").addEventListener("click", function() {
+    closeModal(this)
+});
+
 
 function move(row_increment, column_increment) {
 
@@ -732,7 +411,7 @@ function endTurn(doScoreAction = false) {
     document.getElementById("rotate").removeAttribute("disabled");
 
     // Switch player color
-    buttons = document.getElementsByTagName("button")
+    let buttons = document.getElementsByTagName("button")
     Array.from(buttons).forEach(button => button.classList.toggle("player2"))
     onFirstPlayer = !onFirstPlayer
 }

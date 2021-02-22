@@ -435,47 +435,47 @@
 
         <div id="controls">
             <div id="navigation">
-                <button class="control_button" id="left_up" onclick="move(-1, -1)">
+                <button class="control_button" id="left_up">
                     <div class="nav_img" id="left_up_img"></div>
                 </button>
-                <button class="control_button" id="up" onclick="move(-1, 0)">
+                <button class="control_button" id="up">
                     <div class="nav_img" id="up_img"></div>
                 </button>
-                <button class="control_button" id="right_up" onclick="move(-1, 1)">
+                <button class="control_button" id="right_up">
                     <div class="nav_img" id="right_up_img"></div>
                 </button>
-                <button class="control_button" id="left" disabled onclick="move(0, -1)">
+                <button class="control_button" id="left" disabled>
                     <div class="nav_img" id="left_img"></div>
                 </button>
-                <button class="control_button" id="rotate" onclick="rotate()">
+                <button class="control_button" id="rotate">
                     <div class="nav_img" id="rotate_img"></div>
                 </button>
-                <button class="control_button" id="right" disabled onclick="move(0, 1)">
+                <button class="control_button" id="right" disabled>
                     <div class="nav_img" id="right_img"></div>
                 </button>
-                <button class="control_button" id="left_down" disabled onclick="move(1, -1)">
+                <button class="control_button" id="left_down" disabled>
                     <div class="nav_img" id="left_down_img"></div>
                 </button>
-                <button class="control_button" id="down" disabled onclick="move(1, 0)">
+                <button class="control_button" id="down" disabled>
                     <div class="nav_img" id="down_img"></div>
                 </button>
-                <button class="control_button" id="right_down" disabled onclick="move(1, 1)">
+                <button class="control_button" id="right_down" disabled>
                     <div class="nav_img" id="right_down_img"></div>
                 </button>
             </div>
             <div id="non-nav">
 
-                <button class="reg_button" onclick="newGame()">New Game </button>
-                <button class="reg_button" onclick="showRules()">Rules</button>
+                <button class="reg_button" id="newGame">New Game </button>
+                <button class="reg_button" id="openRules">Rules</button>
 
-                <button class="reg_button" id="end_turn_button" disabled onclick="endTurn()">End Turn</button>
-                <button class="reg_button" id="score_button" disabled onclick="endTurn(doScoreAction=true)">End Turn
+                <button class="reg_button" id="end_turn_button" disabled>End Turn</button>
+                <button class="reg_button" id="score_button" disabled>End Turn
                     <br />and Score</button>
                 <div class="reg_button hidden" id="score"></div>
             </div>
         </div>
         <div class="modal hidden" id="rules">
-            <button onclick="closeModal(this)">X</button>
+            <button id="closeRules">X</button>
             <div id="rule_1" class="rule">
                 <div class="rule_text">SECTOR. Strategically place tiles to build the greatest galactic empire.</div>
             </div>
@@ -524,16 +524,16 @@
             </div>
 
             <div>
-                <button id="rule+-1" onclick="changeRule(-1)">PREV</button>
-                <button id="rule+1" onclick="changeRule(1)">NEXT</button>
+                <button id="rule+-1">PREV</button>
+                <button id="rule+1">NEXT</button>
             </div>
         </div>
         <div class="modal hidden" id="gameOver">
-            <button onclick="closeModal(this)">X</button>
+            <button id="closeGameOver">X</button>
             <div id="gameOverText"></div>
 </div>
     </div>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
 
 </body>
 
