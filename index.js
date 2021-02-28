@@ -7,6 +7,7 @@
 // readme
 
 import { shuffleArray } from "./shuffle.js";
+import { calculateScore } from "./score.js";
 import { Quadrant, tiles } from "./tiles.js"
 
 var sector = (function () {
@@ -295,11 +296,11 @@ var sector = (function () {
 
         // If no tiles remain, the game is over. Highest score wins.
         if (!game.deck.length) {
-            game.scores[playerColor] = calculateScore(playerColor)
+            game.scores[playerColor] = calculateScore(playerColor, game.board)
             if (!game.scores[opponentColor]) {
                 // If the other player still hasn't scored, score them
                 // In this case, ties win
-                game.scores[opponentColor] = calculateScore(opponentColor);
+                game.scores[opponentColor] = calculateScore(opponentColor, game.board);
                 if (game.scores[opponentColor] == game.scores[playerColor]) (game.winner = "TIE");
             }
             if (!game.winner) (game.winner = (game.scores[playerColor] >= game.scores[opponentColor]) ? playerColor : opponentColor);
@@ -308,7 +309,7 @@ var sector = (function () {
         };
 
         if (doScoreAction) {
-            game.scores[playerColor] = calculateScore(playerColor)
+            game.scores[playerColor] = calculateScore(playerColor, game.board)
 
             // Now, end turn and score disappears, replaced by "score to beat"
             let scoreDiv = document.getElementById('score')
@@ -322,7 +323,7 @@ var sector = (function () {
 
             // If the other player has already scored, check if the new score is equal or higher
             if (game.scores[opponentColor] !== null) {
-                let new_score = calculateScore(playerColor)
+                let new_score = calculateScore(playerColor, game.board)
                 if (new_score >= game.scores[opponentColor]) {
                     game.scores[playerColor] = new_score
                     game.winner = playerColor
@@ -368,69 +369,7 @@ var sector = (function () {
         game.onFirstPlayer = !game.onFirstPlayer
     }
 
-    class Cluster {
-        constructor({ indexes = new Set(), symbols = new Set() }) {
-            this.indexes = indexes;
-            this.symbols = symbols;
-        }
 
-        get score() {
-            return (this.indexes.size + this.symbols.size);
-        }
-    }
-
-    function findClusters(color, board) {
-        let clusters = []
-        let row_deltas = [-1, 1, 0, 0];
-        let col_deltas = [0, 0, -1, 1];
-
-
-        board.forEach((row, row_index) => row.forEach((square, column_index) => {
-            if (square.color == color) {
-                // Set up for iteration
-                let cluster = new Cluster({});
-                let coordinatesToSearch = [[row_index, column_index]];
-                // Semi-iterative function to search around each coordinate of interest
-                // for squares of the same color
-                while (coordinatesToSearch.length > 0) {
-                    let [search_row, search_column] = coordinatesToSearch.pop();
-                    // Record this square in the cluster
-                    cluster.indexes.add(JSON.stringify([search_row, search_column]));
-                    if (board[search_row][search_column].symbol) {
-                        cluster.symbols.add(board[search_row][search_column].symbol)
-                    }
-                    // Clear the color from the board so we don't record it more than once
-                    board[search_row][search_column].color = 'black'
-                    // Search up/down/left right for squares of the same color
-                    // If one is found, add it to the list of coordinates to search
-                    row_deltas.forEach((row_delta, i) => {
-                        let column_delta = col_deltas[i];
-                        try {
-                            if (board[search_row + row_delta][search_column + column_delta]['color'] == color) {
-                                coordinatesToSearch.push([search_row + row_delta, search_column + column_delta])
-                            }
-                        } catch {
-                            // don't worry if we're at the edge of the board, just quiet the error
-                        }
-                    })
-                }
-                // Add this cluster to the list of clusters
-                clusters.push(cluster)
-            }
-        }
-        ))
-        return clusters
-    }
-
-    function calculateScore(color) {
-        let boardCopy = JSON.parse(JSON.stringify(game.board));
-
-        let clusters = findClusters(color, boardCopy);
-
-        let scores = clusters.map(cluster => cluster.score);
-
-        return Math.max(...scores)
-    }
 
 
     function newGame() {

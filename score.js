@@ -1,4 +1,3 @@
-
 class Cluster {
     constructor({ indexes = new Set(), symbols = new Set() }) {
         this.indexes = indexes;
@@ -9,71 +8,6 @@ class Cluster {
         return (this.indexes.size + this.symbols.size);
     }
 }
-
-class Quadrant {
-    constructor({ color, symbol }) {
-        this.color = color;
-        this.symbol = symbol;
-    }
-}
-board = [
-    [
-        new Quadrant({
-            color: "black",
-            symbol: null
-        }),
-        new Quadrant({
-            color: "blue",
-            symbol: "moon"
-        }),
-        new Quadrant({
-            color: "blue",
-            symbol: "whirl"
-        })
-    ],
-    [
-        new Quadrant({
-            color: "red",
-            symbol: "moon"
-        }),
-        new Quadrant({
-            color: "blue",
-            symbol: "moon"
-        }),
-        new Quadrant({
-            color: "black",
-            symbol: null
-        })
-    ],
-    [
-        new Quadrant({
-            color: "black",
-            symbol: null
-        }),
-        new Quadrant({
-            color: "blue",
-            symbol: "whirl"
-        }),
-        new Quadrant({
-            color: "blue",
-            symbol: "moon"
-        })
-    ],
-    [
-        new Quadrant({
-            color: "blue",
-            symbol: "star"
-        }),
-        new Quadrant({
-            color: "black",
-            symbol: null
-        }),
-        new Quadrant({
-            color: "blue",
-            symbol: "moon"
-        })
-    ]
-]
 
 function findClusters(color, board) {
     let clusters = []
@@ -86,13 +20,15 @@ function findClusters(color, board) {
             // Set up for iteration
             let cluster = new Cluster({});
             let coordinatesToSearch = [[row_index, column_index]];
-            // Semi-iterative function to search around each coordinate of interest 
+            // Semi-iterative function to search around each coordinate of interest
             // for squares of the same color
             while (coordinatesToSearch.length > 0) {
                 let [search_row, search_column] = coordinatesToSearch.pop();
                 // Record this square in the cluster
-                cluster.indexes.add([search_row, search_column]);
-                cluster.symbols.add(board[search_row][search_column].symbol)
+                cluster.indexes.add(JSON.stringify([search_row, search_column]));
+                if (board[search_row][search_column].symbol) {
+                    cluster.symbols.add(board[search_row][search_column].symbol)
+                }
                 // Clear the color from the board so we don't record it more than once
                 board[search_row][search_column].color = 'black'
                 // Search up/down/left right for squares of the same color
@@ -116,16 +52,13 @@ function findClusters(color, board) {
     return clusters
 }
 
-function calculateScore(color) {
+export function calculateScore(color, board) {
+    // Turn into regular objects instead of Quadrants
+    let boardCopy = JSON.parse(JSON.stringify(board));
 
-    let clusters = findClusters(color, board)
+    let clusters = findClusters(color, boardCopy);
 
-    let scores = clusters.map(cluster => cluster.score)
+    let scores = clusters.map(cluster => cluster.score);
 
     return Math.max(...scores)
 }
-
-blue = calculateScore('blue')
-red = calculateScore('red')
-console.log(red)
-console.log(blue)
