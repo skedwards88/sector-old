@@ -11,62 +11,65 @@ import { Quadrant, tiles } from "./tiles.js"
 
 var sector = (function () {
 
-    let deck
-    let winner
-    let board
-    let board_overlay
-    let offer
-    let scores = {
-        red: null,
-        blue: null
-    }
-    let onFirstPlayer = true
-    function getPlayerColor(onFirstPlayer) {
-        return onFirstPlayer ? "blue" : "red"
-    }
-    let currentRule = 1
+    function Game() {
 
-    // Setup Game
-    function setUpGame() {
+        this.winner = null;
+
+        this.deck = tiles.slice();
 
         // The board starts off as a 10x10 grid of empty squares
-        board = Array(10).fill(Array(10).fill(null));
-        board = board.map(row => row.map(square => new Quadrant({
+        this.board = Array(10).fill(Array(10).fill(null)).map(row => row.map(square => new Quadrant({
             color: null,
             symbol: null
-        })))
+        })));
 
         // The overlay (showing the active tile) starts off as a 10x10 grid of transparent squares
-        board_overlay = Array(10).fill(Array(10).fill(null));
-        board_overlay = board_overlay.map(row => row.map(square => new Quadrant({
+        this.board_overlay = Array(10).fill(Array(10).fill(null)).map(row => row.map(square => new Quadrant({
             color: "transparent",
             symbol: null
-        })))
+        })));
 
-        offer = {
+        this.offer = {
             row: null,
             column: null,
             tile: null
-        }
+        };
+
+        this.scores = {
+            red: null,
+            blue: null
+        };
+
+        this.onFirstPlayer = true;
+
+        this.getPlayerColor = function getPlayerColor(onFirstPlayer) {
+            return onFirstPlayer ? "blue" : "red"
+        };
+
+        this.currentRule = 1;
+
+    }
+    let game = new Game();
+
+    function setUpGame() {
 
         // Shuffle tiles
-        deck = tiles.slice();
-        shuffleArray(deck);
+        shuffleArray(game.deck);
 
-        // Put one tile in middle of board (populate board, render tile)
-        let starting_tile = deck.pop();
+        // Draw the first tile and place it in the middle of the board
+        let starting_tile = game.deck.pop();
         starting_tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let row = 4 + row_index;
             let column = 4 + column_index;
-            board[row][column] = square;
+            game.board[row][column] = square;
             let element = document.getElementById("row" + row + "col" + column + "played");
             element.classList.add(square.color)
             if (square.symbol) element.classList.add(square.symbol)
         }))
 
         // Draw one for offer, update offer and render
-        offer.tile = deck.pop();
-        offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        game.offer.tile = game.deck.pop();
+        game.offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
             element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
             element.classList.add(square.color)
@@ -93,9 +96,10 @@ var sector = (function () {
 
         let end_turn_button = document.getElementById('score_button')
         end_turn_button.classList.remove('hidden');
+
+        return game
     }
 
-    setUpGame()
 
     document.getElementById("rotate").addEventListener("click", function () {
         rotate()
@@ -153,9 +157,9 @@ var sector = (function () {
     function move(row_increment, column_increment) {
 
         // if moving onto the board
-        if (offer.row === null) {
+        if (game.offer.row === null) {
             // clear the offer styling
-            offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+            game.offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
                 let element = document.getElementById("offer_row" + row_index + "col" + column_index);
                 element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl", "offer_row0_col0",
                     "offer_row0_col1",
@@ -164,13 +168,13 @@ var sector = (function () {
             }))
 
             // Update offer position
-            offer.row = 8; // Row is always 8 when moving onto the board
-            offer.column = 4 + column_increment;
+            game.offer.row = 8; // Row is always 8 when moving onto the board
+            game.offer.column = 4 + column_increment;
         } else { // moving within the board
             // Clear the styling from the old offer position
-            offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-                let row = offer.row + row_index;
-                let column = offer.column + column_index;
+            game.offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+                let row = game.offer.row + row_index;
+                let column = game.offer.column + column_index;
                 let element = document.getElementById("row" + row + "col" + column + "overlay");
                 element.classList.remove(
                     "red",
@@ -188,17 +192,17 @@ var sector = (function () {
             }))
 
             // Update offer position
-            offer.row += row_increment;
-            offer.column += column_increment;
+            game.offer.row += row_increment;
+            game.offer.column += column_increment;
         }
 
-        document.getElementById("remaining").textContent = deck.length
+        document.getElementById("remaining").textContent = game.deck.length
 
 
         // Update square styling with the new offer position
-        offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-            let row = offer.row + row_index;
-            let column = offer.column + column_index;
+        game.offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+            let row = game.offer.row + row_index;
+            let column = game.offer.column + column_index;
             let element = document.getElementById("row" + row + "col" + column + "overlay");
             element.classList.add(square.color)
             if (square.symbol) element.classList.add(square.symbol)
@@ -206,10 +210,10 @@ var sector = (function () {
         }))
 
         // If it is invalid to move in a direction, inactivate those move buttons
-        let valid_up = offer.row !== 0;
-        let valid_down = offer.row + 1 !== (board.length - 1);
-        let valid_left = offer.column !== 0;
-        let valid_right = offer.column + 1 !== board[0].length - 1;
+        let valid_up = game.offer.row !== 0;
+        let valid_down = game.offer.row + 1 !== (game.board.length - 1);
+        let valid_left = game.offer.column !== 0;
+        let valid_right = game.offer.column + 1 !== game.board[0].length - 1;
         valid_up ? document.getElementById("up").removeAttribute("disabled") : document.getElementById("up").setAttribute("disabled", "");
         valid_down ? document.getElementById("down").removeAttribute("disabled") : document.getElementById("down").setAttribute("disabled", "");
         valid_left ? document.getElementById("left").removeAttribute("disabled") : document.getElementById("left").setAttribute("disabled", "");
@@ -226,11 +230,11 @@ var sector = (function () {
 
     function rotate() {
         // Rotate the tile 90 degrees clockwise
-        offer.tile.quadrants = [[offer.tile.quadrants[1][0], offer.tile.quadrants[0][0]], [offer.tile.quadrants[1][1], offer.tile.quadrants[0][1]]]
+        game.offer.tile.quadrants = [[game.offer.tile.quadrants[1][0], game.offer.tile.quadrants[0][0]], [game.offer.tile.quadrants[1][1], game.offer.tile.quadrants[0][1]]]
 
         // Update offer or square styling
-        if (offer.row === null) {
-            offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        if (game.offer.row === null) {
+            game.offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
                 let element = document.getElementById("offer_row" + row_index + "col" + column_index);
                 element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
                 element.classList.add(square.color)
@@ -238,9 +242,9 @@ var sector = (function () {
             }))
 
         } else {
-            offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-                let row = offer.row + row_index;
-                let column = offer.column + column_index;
+            game.offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+                let row = game.offer.row + row_index;
+                let column = game.offer.column + column_index;
                 let element = document.getElementById("row" + row + "col" + column + "overlay");
                 element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
                 element.classList.add(square.color)
@@ -253,14 +257,14 @@ var sector = (function () {
 
     function validatePlacement() {
         // If blue is overlaid on red or vice versa, the placement is invalid
-        let overlay_colors = offer.tile.quadrants.flat().map(quadrant => quadrant.color);
+        let overlay_colors = game.offer.tile.quadrants.flat().map(quadrant => quadrant.color);
         let offsetsToCheckColor = [
             { row_offset: 0, column_offset: 0 }, { row_offset: 0, column_offset: 1 },
             { row_offset: 1, column_offset: 0 }, { row_offset: 1, column_offset: 1 }
         ];
-        let row = offer.row;
-        let column = offer.column;
-        let board_colors = offsetsToCheckColor.map(offset => board[row + offset.row_offset][column + offset.column_offset].color);
+        let row = game.offer.row;
+        let column = game.offer.column;
+        let board_colors = offsetsToCheckColor.map(offset => game.board[row + offset.row_offset][column + offset.column_offset].color);
         let invalid_overlays = overlay_colors.filter((overlay_color, index) => (
             (board_colors[index] === 'red' && overlay_color === 'blue') || (board_colors[index] === 'blue' && overlay_color === 'red'))
         )
@@ -282,7 +286,7 @@ var sector = (function () {
         ]
         let touching = offsetsToCheckTouching.filter(offset => {
             if (0 <= (row + offset.row_offset) && (row + offset.row_offset) < 10 && 0 <= (column + offset.column_offset) && (column + offset.column_offset) < 10) {
-                return board[row + offset.row_offset][column + offset.column_offset].color
+                return game.board[row + offset.row_offset][column + offset.column_offset].color
             }
         }
         )
@@ -310,7 +314,7 @@ var sector = (function () {
         document.getElementById("left_down").setAttribute("disabled", "");
         document.getElementById("right_down").setAttribute("disabled", "");
         document.getElementById("rotate").setAttribute("disabled", "");
-        document.getElementById("gameOverText").innerText = "Red: " + scores.red + "\nBlue: " + scores.blue + "\nWinner: " + winner
+        document.getElementById("gameOverText").innerText = "Red: " + game.scores.red + "\nBlue: " + game.scores.blue + "\nWinner: " + game.winner
         document.getElementById("gameOver").classList.remove("hidden")
 
     }
@@ -318,11 +322,11 @@ var sector = (function () {
     function endTurn(doScoreAction = false) {
 
         // Update the board variable
-        offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
-            let row = offer.row + row_index;
-            let column = offer.column + column_index;
-            board[row][column].color = square.color
-            board[row][column].symbol = square.symbol
+        game.offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+            let row = game.offer.row + row_index;
+            let column = game.offer.column + column_index;
+            game.board[row][column].color = square.color
+            game.board[row][column].symbol = square.symbol
             // and transfer the style to the board
             let element = document.getElementById("row" + row + "col" + column + "played");
             element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
@@ -340,29 +344,29 @@ var sector = (function () {
             )
         }))
 
-        let playerColor = getPlayerColor(onFirstPlayer)
-        let opponentColor = getPlayerColor(!onFirstPlayer)
+        let playerColor = game.getPlayerColor(game.onFirstPlayer)
+        let opponentColor = game.getPlayerColor(!game.onFirstPlayer)
 
         // If no tiles remain, the game is over. Highest score wins.
-        if (!deck.length) {
-            scores[playerColor] = calculateScore(playerColor)
-            if (!scores[opponentColor]) {
+        if (!game.deck.length) {
+            game.scores[playerColor] = calculateScore(playerColor)
+            if (!game.scores[opponentColor]) {
                 // If the other player still hasn't scored, score them
                 // In this case, ties win
-                scores[opponentColor] = calculateScore(opponentColor);
-                if (scores[opponentColor] == scores[playerColor]) (winner = "TIE");
+                game.scores[opponentColor] = calculateScore(opponentColor);
+                if (game.scores[opponentColor] == game.scores[playerColor]) (game.winner = "TIE");
             }
-            if (!winner) (winner = (scores[playerColor] >= scores[opponentColor]) ? playerColor : opponentColor);
+            if (!game.winner) (game.winner = (game.scores[playerColor] >= game.scores[opponentColor]) ? playerColor : opponentColor);
             gameOver();
             return;
         };
 
         if (doScoreAction) {
-            scores[playerColor] = calculateScore(playerColor)
+            game.scores[playerColor] = calculateScore(playerColor)
 
             // Now, end turn and score disappears, replaced by "score to beat"
             let scoreDiv = document.getElementById('score')
-            scoreDiv.innerText = 'Score to beat: ' + scores[playerColor];
+            scoreDiv.innerText = 'Score to beat: ' + game.scores[playerColor];
             scoreDiv.classList.remove('hidden');
 
             let end_turn_button = document.getElementById('score_button')
@@ -371,11 +375,11 @@ var sector = (function () {
         } else {
 
             // If the other player has already scored, check if the new score is equal or higher
-            if (scores[opponentColor] !== null) {
+            if (game.scores[opponentColor] !== null) {
                 let new_score = calculateScore(playerColor)
-                if (new_score >= scores[opponentColor]) {
-                    scores[playerColor] = new_score
-                    winner = playerColor
+                if (new_score >= game.scores[opponentColor]) {
+                    game.scores[playerColor] = new_score
+                    game.winner = playerColor
                     gameOver();
                     return;
                 }
@@ -383,14 +387,14 @@ var sector = (function () {
         }
 
         // Draw a new offer tile and reset the offer and render the offer
-        offer = {
+        game.offer = {
             row: null,
             column: null,
             tile: null
         }
         // Draw one for offer, update offer and render
-        offer.tile = deck.pop();
-        offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
+        game.offer.tile = game.deck.pop();
+        game.offer.tile.quadrants.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("offer_row" + row_index + "col" + column_index);
             element.classList.add(square.color)
             if (square.symbol) element.classList.add(square.symbol)
@@ -415,7 +419,7 @@ var sector = (function () {
         // Switch player color
         let buttons = document.getElementsByTagName("button")
         Array.from(buttons).forEach(button => button.classList.toggle("player2"))
-        onFirstPlayer = !onFirstPlayer
+        game.onFirstPlayer = !game.onFirstPlayer
     }
 
     class Cluster {
@@ -473,7 +477,7 @@ var sector = (function () {
     }
 
     function calculateScore(color) {
-        let boardCopy = JSON.parse(JSON.stringify(board));
+        let boardCopy = JSON.parse(JSON.stringify(game.board));
 
         let clusters = findClusters(color, boardCopy);
 
@@ -484,7 +488,7 @@ var sector = (function () {
 
 
     function newGame() {
-        board.forEach((row, row_index) => row.forEach((square, column_index) => {
+        game.board.forEach((row, row_index) => row.forEach((square, column_index) => {
             let element = document.getElementById("row" + row_index + "col" + column_index + "played");
             element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
             element = document.getElementById("row" + row_index + "col" + column_index + "overlay");
@@ -494,7 +498,7 @@ var sector = (function () {
                 "offer_row1_col1")
         }))
 
-        winner = null
+        game.winner = null
 
         setUpGame()
     }
@@ -505,22 +509,22 @@ var sector = (function () {
         let rules = document.getElementById("rules");
         rules.classList.remove("hidden");
         // hide the last viewed rule
-        document.getElementById("rule_" + currentRule).classList.add("hidden");
+        document.getElementById("rule_" + game.currentRule).classList.add("hidden");
         // show the first rule
         document.getElementById("rule_1").classList.remove("hidden");
-        currentRule = 1
+        game.currentRule = 1
     }
 
     function changeRule(increment) {
-        document.getElementById("rule_" + currentRule).classList.add("hidden");
-        document.getElementById("rule_" + (currentRule + increment)).classList.remove("hidden");
+        document.getElementById("rule_" + game.currentRule).classList.add("hidden");
+        document.getElementById("rule_" + (game.currentRule + increment)).classList.remove("hidden");
 
-        if (!document.getElementById("rule_" + (currentRule + increment + increment))) {
+        if (!document.getElementById("rule_" + (game.currentRule + increment + increment))) {
             document.getElementById("rule+" + increment).classList.add("hidden")
         } else {
             document.getElementById("rule+" + (-1 * increment)).classList.remove("hidden")
         }
-        currentRule += increment
+        game.currentRule += increment
     }
 
     function closeModal(element) {
