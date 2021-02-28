@@ -100,60 +100,6 @@ var sector = (function () {
         return game
     }
 
-
-    document.getElementById("rotate").addEventListener("click", function () {
-        rotate()
-    });
-    document.getElementById("left_up").addEventListener("click", function () {
-        move(-1, -1)
-    });
-    document.getElementById("up").addEventListener("click", function () {
-        move(-1, 0)
-    });
-    document.getElementById("right_up").addEventListener("click", function () {
-        move(-1, 1)
-    });
-    document.getElementById("left").addEventListener("click", function () {
-        move(0, -1)
-    });
-    document.getElementById("right").addEventListener("click", function () {
-        move(0, 1)
-    });
-    document.getElementById("left_down").addEventListener("click", function () {
-        move(1, -1)
-    });
-    document.getElementById("down").addEventListener("click", function () {
-        move(1, 0)
-    });
-    document.getElementById("right_down").addEventListener("click", function () {
-        move(1, 1)
-    });
-    document.getElementById("newGame").addEventListener("click", function () {
-        newGame()
-    });
-    document.getElementById("openRules").addEventListener("click", function () {
-        showRules()
-    });
-    document.getElementById("end_turn_button").addEventListener("click", function () {
-        endTurn()
-    });
-    document.getElementById("score_button").addEventListener("click", function () {
-        endTurn(true)
-    });
-    document.getElementById("closeRules").addEventListener("click", function () {
-        closeModal(this)
-    });
-    document.getElementById("rule+-1").addEventListener("click", function () {
-        changeRule(-1)
-    });
-    document.getElementById("rule+1").addEventListener("click", function () {
-        changeRule(1)
-    });
-    document.getElementById("closeGameOver").addEventListener("click", function () {
-        closeModal(this)
-    });
-
-
     function move(row_increment, column_increment) {
 
         // if moving onto the board
@@ -532,8 +478,68 @@ var sector = (function () {
     }
 
     return {
-        setUpGame: setUpGame
+        setUpGame: setUpGame,
+        move: move,
+        rotate: rotate,
+        newGame: newGame,
+        showRules: showRules,
+        endTurn: endTurn,
+        closeModal: closeModal,
+        changeRule: changeRule
     }
 }());
 
 sector.setUpGame()
+
+
+document.getElementById("rotate").addEventListener("click", function () {
+    sector.rotate()
+});
+document.getElementById("left_up").addEventListener("click", function () {
+    sector.move(-1, -1)
+});
+document.getElementById("up").addEventListener("click", function () {
+    sector.move(-1, 0)
+});
+document.getElementById("right_up").addEventListener("click", function () {
+    sector.move(-1, 1)
+});
+document.getElementById("left").addEventListener("click", function () {
+    sector.move(0, -1)
+});
+document.getElementById("right").addEventListener("click", function () {
+    sector.move(0, 1)
+});
+document.getElementById("left_down").addEventListener("click", function () {
+    sector.move(1, -1)
+});
+document.getElementById("down").addEventListener("click", function () {
+    sector.move(1, 0)
+});
+document.getElementById("right_down").addEventListener("click", function () {
+    sector.move(1, 1)
+});
+document.getElementById("newGame").addEventListener("click", function () {
+    sector.newGame()
+});
+document.getElementById("openRules").addEventListener("click", function () {
+    sector.showRules()
+});
+document.getElementById("end_turn_button").addEventListener("click", function () {
+    sector.endTurn()
+});
+document.getElementById("score_button").addEventListener("click", function () {
+    sector.endTurn(true)
+});
+document.getElementById("closeRules").addEventListener("click", function () {
+    sector.closeModal(this)
+});
+document.getElementById("rule+-1").addEventListener("click", function () {
+    sector.changeRule(-1)
+});
+document.getElementById("rule+1").addEventListener("click", function () {
+    sector.changeRule(1)
+});
+document.getElementById("closeGameOver").addEventListener("click", function () {
+    sector.closeModal(this)
+});
