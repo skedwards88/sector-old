@@ -176,7 +176,6 @@ var sector = (function () {
     }
 
     function rotate() {
-        console.log(this)
         // Rotate the tile 90 degrees clockwise
         this.game.offer.tile.quadrants = [[this.game.offer.tile.quadrants[1][0], this.game.offer.tile.quadrants[0][0]], [this.game.offer.tile.quadrants[1][1], this.game.offer.tile.quadrants[0][1]]]
 
@@ -249,7 +248,7 @@ var sector = (function () {
         }
     }
 
-    function gameOver() {
+    function gameOver(game) {
         // disable the buttons
         document.getElementById("end_turn_button").setAttribute("disabled", "");
         document.getElementById("score_button").setAttribute("disabled", "");
@@ -262,9 +261,10 @@ var sector = (function () {
         document.getElementById("left_down").setAttribute("disabled", "");
         document.getElementById("right_down").setAttribute("disabled", "");
         document.getElementById("rotate").setAttribute("disabled", "");
-        document.getElementById("gameOverText").innerText = "Red: " + this.game.scores.red + "\nBlue: " + this.game.scores.blue + "\nWinner: " + this.game.winner
-        document.getElementById("gameOver").classList.remove("hidden")
 
+        // Show the winner
+        document.getElementById("gameOverText").innerText = "Red: " + game.scores.red + "\nBlue: " + game.scores.blue + "\nWinner: " + game.winner
+        document.getElementById("gameOver").classList.remove("hidden")
     }
 
     function endTurn(doScoreAction = false) {
@@ -305,7 +305,7 @@ var sector = (function () {
                 if (this.game.scores[opponentColor] == this.game.scores[playerColor]) (this.game.winner = "TIE");
             }
             if (!this.game.winner) (this.game.winner = (this.game.scores[playerColor] >= this.game.scores[opponentColor]) ? playerColor : opponentColor);
-            gameOver();
+            gameOver(this.game);
             return;
         };
 
@@ -328,7 +328,7 @@ var sector = (function () {
                 if (new_score >= this.game.scores[opponentColor]) {
                     this.game.scores[playerColor] = new_score
                     this.game.winner = playerColor
-                    gameOver();
+                    gameOver(this.game);
                     return;
                 }
             }
@@ -370,27 +370,24 @@ var sector = (function () {
         this.game.onFirstPlayer = !this.game.onFirstPlayer
     }
 
-
-
-
     function newGame() {
         this.game.board.forEach((row, row_index) => row.forEach((square, column_index) => {
-            let element = document.getElementById("row" + row_index + "col" + column_index + "played");
-            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl")
-            element = document.getElementById("row" + row_index + "col" + column_index + "overlay");
-            element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl", "offer_row0_col0",
+            // Clear the board
+            let board_element = document.getElementById("row" + row_index + "col" + column_index + "played");
+            board_element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl");
+            // clear the overlay
+            let overlay_element = document.getElementById("row" + row_index + "col" + column_index + "overlay");
+            overlay_element.classList.remove("red", "blue", "black", "moon", "star", "planet", "whirl", "offer_row0_col0",
                 "offer_row0_col1",
                 "offer_row1_col0",
                 "offer_row1_col1")
         }))
 
-        this.game.winner = null
+        this.game = sector.setUpGame();
 
-        setUpGame()
     }
 
     function showRules() {
-        console.log("RULES")
         // show the modal
         let rules = document.getElementById("rules");
         rules.classList.remove("hidden");
@@ -433,7 +430,7 @@ sector.game = sector.setUpGame()
 
 
 document.getElementById("rotate").addEventListener("click", function () {
-    sector.rotate(sector.ggg)
+    sector.rotate()
 });
 document.getElementById("left_up").addEventListener("click", function () {
     sector.move(-1, -1)
