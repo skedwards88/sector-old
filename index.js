@@ -264,8 +264,10 @@ var sector = (function () {
         document.getElementById("rotate").setAttribute("disabled", "");
 
         // Show the winner
-        document.getElementById("gameOverText").innerText = "Red: " + game.scores.red + "\nBlue: " + game.scores.blue + "\nWinner: " + game.winner
+        document.getElementById("gameOverText").innerText = game.winner.toUpperCase() + " wins!" + "\nred: " + game.scores.red + "\nblue: " + game.scores.blue
+        document.getElementById("closeGameOver").classList.add(game.winner)
         document.getElementById("gameOver").classList.remove("hidden")
+        document.getElementById("gameOver").classList.add(game.winner)
     }
 
     function endTurn(doScoreAction = false) {

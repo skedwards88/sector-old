@@ -324,13 +324,46 @@ button:disabled {
 
 .modal {
     position: absolute;
-    background-color: blanchedalmond;
+    background-color: black;
     height: 100%;
     width: 100%;
     left: 0;
     top: 0;
 }
 
+#gameOver.hidden {
+    display: none;
+}
+#gameOver {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+}
+
+#gameOver.red {
+    background: url('./images/stars.svg'), linear-gradient(black 15%, var(--red));
+}
+#gameOver.blue {
+    background: url('./images/stars.svg'), linear-gradient(black 15%, var(--blue));
+}
+
 #gameOverText {
     white-space: pre;
+    font-size: xx-large;
+    color: white;
+    margin: 50px;
+}
+
+#closeGameOver {
+    color: white;
+    flex-grow: 0;
+    width: 100px;
+}
+
+#closeGameOver.red {
+    background: var(--red-button);
+}
+
+#closeGameOver.blue {
+    background: var(--blue-button);
 }
