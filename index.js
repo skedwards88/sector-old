@@ -2,7 +2,6 @@
 // rules
 // jslint
 // add confirmation for new game
-// set max size of the buttons for large screen size
 
 import { shuffleArray } from "./shuffle.js";
 import { calculateScore } from "./score.js";
@@ -314,9 +313,9 @@ var sector = (function () {
         if (doScoreAction) {
             this.game.scores[playerColor] = calculateScore(playerColor, this.game.board)
 
-            // Now, end turn and score disappears, replaced by "score to beat"
+            // Now, end turn and score button disappears, replaced by the score
             let scoreDiv = document.getElementById('score')
-            scoreDiv.innerText = 'Score to beat: ' + this.game.scores[playerColor];
+            scoreDiv.innerText = playerColor.toUpperCase() + ': ' + this.game.scores[playerColor];
             scoreDiv.classList.remove('hidden');
 
             let end_turn_button = document.getElementById('score_button')

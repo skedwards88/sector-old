@@ -169,6 +169,7 @@ button:disabled {
     margin: 0 0 2px 3px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 #score.hidden {
     display: none;
