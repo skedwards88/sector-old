@@ -1,10 +1,8 @@
-// how to import. then move other components to separate files
 // let arrow keys control nav buttons
 // rules
 // jslint
 // add confirmation for new game
 // set max size of the buttons for large screen size
-// readme
 
 import { shuffleArray } from "./shuffle.js";
 import { calculateScore } from "./score.js";
