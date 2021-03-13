@@ -90,6 +90,10 @@ var sector = (function () {
         document.getElementById("right_up").removeAttribute("disabled");
         document.getElementById("rotate").removeAttribute("disabled");
 
+        // Set buttons to first player color
+        let buttons = document.getElementsByTagName("button")
+        Array.from(buttons).forEach(button => button.classList.remove("player2"))
+
         let scoreDiv = document.getElementById('score')
         scoreDiv.classList.add('hidden');
 
