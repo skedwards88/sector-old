@@ -159,6 +159,7 @@ button.player2:active {
 button:disabled {
   opacity: 0.6;
   color: white;
+  touch-action: none;
 }
 
 #navigation {
