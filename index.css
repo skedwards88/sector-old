@@ -432,41 +432,41 @@ button:disabled {
 }
 
 #example_tile {
-  background-image: url(./images/example_tile.png);
+  background-image: url(./images/rules/example_tile.png);
   min-height: 100px;
   min-width: 100px;
 }
 #symbols {
-  background-image: url(./images/symbols.png);
+  background-image: url(./images/rules/symbols.png);
   min-height: 80px;
   min-width: 200px;
   border: none;
 }
 
 #legal_overlap {
-  background-image: url(./images/legal_overlap.png);
+  background-image: url(./images/rules/legal_overlap.png);
   min-height: 100px;
   min-width: 100px;
 }
 #placements {
-  background-image: url(./images/placements.png);
+  background-image: url(./images/rules/placements.png);
   min-height: 150px;
   min-width: 400px;
 }
 #sectors {
-  background-image: url(./images/sectors.png);
+  background-image: url(./images/rules/sectors.png);
   min-height: 100px;
   min-width: 300px;
 }
 
 #example_score {
-  background-image: url(./images/score.png);
+  background-image: url(./images/rules/score.png);
   min-height: 100px;
   min-width: 100px;
 }
 
 #end_and_score {
-  background-image: url(./images/end_and_score.png);
+  background-image: url(./images/rules/end_and_score.png);
   min-height: 100px;
   min-width: 100px;
   border: none;
