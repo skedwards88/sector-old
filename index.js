@@ -1,7 +1,7 @@
 // let arrow keys control nav buttons
-// rules
 // jslint
 // add confirmation for new game
+// see if can ignore double clicks so don't zoom on iphone
 
 import { shuffleArray } from "./shuffle.js";
 import { calculateScore } from "./score.js";
