@@ -137,6 +137,7 @@ button {
   flex: 1;
   margin: 0 0 2px 3px;
   background: var(--blue-button);
+  touch-action: manipulation;
 }
 
 button.player2 {
