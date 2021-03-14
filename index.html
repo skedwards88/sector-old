@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -475,63 +476,62 @@
             </div>
         </div>
         <div class="modal hidden" id="rules">
-            <button id="closeRules">X</button>
+            <button id="closeRules">close</button>
             <div id="rule_1" class="rule">
-                <div class="rule_text">SECTOR. Strategically place tiles to build the greatest galactic empire.</div>
+                <div>SECTOR</div>
+                <div>Strategically place tiles to build the greatest galactic empire.</div>
+                <div>2 players</div>
+                <div>5 minutes</div>
+                <div class="rule_image" id="symbols"></div>
             </div>
             <div id="rule_2" class="rule hidden">
-                <div class="rule_image">{show example tiles}</div>
-                <div class="rule_text">Each tile has 4 quadrants, which may be blue, red or black. Some blue and red
-                    quadrants have one of four different icons.</div>
+                <div>Players take turns placing tiles in on the board (the Expanse).</div>
+                <div>The color of the control panel reflects the color of the current player.</div>
             </div>
             <div id="rule_3" class="rule hidden">
-                <div class="rule_text">Take turns placing tiles in the Expanse (black area).</div>
+                <div>Each tile is divided into quadrants. Quadrants may be blue, red or black. </div>
+                <div class="rule_image" id="example_tile"></div>
+                <div>Some blue and red quadrants have one of four different icons.</div>
+                <div class="rule_image" id="symbols"></div>
             </div>
             <div id="rule_4" class="rule hidden">
-                <div class="rule_image">{show adj ok, overlap ok, diag not ok}</div>
-                <div class="rule_text">At least one quadrant of the placed tile must be adjacent to or overlapping a
-                    quadrant of another tile in the Expanse.</div>
+                <div>You may place a tile completely or partially overlapping another tile in the Expanse.</div>
+                <div class="rule_image" id="legal_overlap"></div>
+                <div>However, blue and red cannot overlap.</div>
             </div>
             <div id="rule_5" class="rule hidden">
-                <div class="rule_image">{show blue over red not ok}</div>
-                <div class="rule_text">Quadrants may overlap, except blue cannot overlap red and visa versa.</div>
+                <div>At least one quadrant of the placed tile must neighbor or overlap a quadrant of another tile in
+                    the Expanse.</div>
+                <div class="rule_image" id="placements"></div>
             </div>
             <div id="rule_6" class="rule hidden">
-                <div class="rule_image">{show example scores}</div>
-                <div class="rule_text">A sector is any connected set of quadrants of your color. A sector is worth 1
-                    point per
-                    quadrant, plus 1 point per unique icon.</div>
+                <div>A sector is any connected set of quadrants of the same color.</div>
+                <div class="rule_image" id="sectors"></div>
             </div>
             <div id="rule_7" class="rule hidden">
-                <div class="rule_image">{show button to score}</div>
-                <div class="rule_text">Once per game, a player can score points for their highest scoring sector.</div>
+                <div>A sector is worth 1 point per quadrant, plus 1 point per unique icon.</div>
+                <div>For example, this sector is worth 7 points: 5 points for each blue quadrant + 2 points for each unique symbol.</div>
+                <div class="rule_image" id="example_score"></div>
             </div>
             <div id="rule_8" class="rule hidden">
-                <div class="rule_text">After that point, their opponent must try to tie or beat the score. If at the end
-                    of </div>
+                <div>Once per game, either player may choose to score their highest scoring sector.</div>
+                <div class="rule_image" id="end_and_score"></div>
             </div>
             <div id="rule_9" class="rule hidden">
-                <div class="rule_text">If no player has scored a sector by the end of the game, the </div>
+                <div>After this point, the un-scored player tries to tie or beat the score.</div>
             </div>
             <div id="rule_10" class="rule hidden">
-                <div class="rule_text"></div>
+                <div>If no player has scored a sector by the end of the game, the highest scoring sector wins.</div>
             </div>
-            <div id="rule_11" class="rule hidden">
-                <div class="rule_text"></div>
-            </div>
-            <div id="rule_12" class="rule hidden">
-                <div class="rule_text"></div>
-            </div>
-
             <div>
-                <button id="rule+-1">PREV</button>
-                <button id="rule+1">NEXT</button>
+                <button id="rule+-1">&#60; &#60; &#60;</button>
+                <button id="rule+1">&#62; &#62; &#62;</button>
             </div>
         </div>
         <div class="modal hidden" id="gameOver">
             <div id="gameOverText"></div>
             <button id="closeGameOver">close</button>
-</div>
+        </div>
     </div>
     <script type="module" src="index.js"></script>
 
