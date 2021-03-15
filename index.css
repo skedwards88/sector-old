@@ -29,14 +29,15 @@
     rgb(95, 104, 230) 50%,
     rgb(15, 5, 70) 100%
   );
-  background-color: black;
-  background-image: url(./images/stars.svg);
+  height: 100%;
 }
 
 body {
     margin: 0;
     padding: 0;
     -webkit-text-size-adjust: 100%;
+    background-color: black;
+    background-image: url(./images/stars.svg);
   }
   
 #game {
