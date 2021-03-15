@@ -142,7 +142,6 @@ body {
 button {
   all: unset;
   border-radius: 5px;
-  flex: 1;
   margin: 0 0 2px 3px;
   background: var(--blue-button);
   touch-action: manipulation;
@@ -181,6 +180,9 @@ button:disabled {
   flex-direction: column;
   width: calc(var(--nav) * 1.2);
   font-size: calc(var(--nav) * 0.2);
+}
+#non-nav > button {
+    flex: 1;
 }
 #remaining {
   color: white;
@@ -423,10 +425,6 @@ button:disabled {
   );
   border-radius: 10px;
   padding: 10px;
-}
-
-#rules button .inactive {
-    
 }
 
 .rule.hidden {
