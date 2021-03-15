@@ -385,6 +385,10 @@ var sector = (function () {
                 "offer_row1_col1")
         }))
 
+        // Clear the game over color
+        document.getElementById("closeGameOver").classList.remove('red', 'blue')
+        document.getElementById("gameOver").classList.remove('red', 'blue')
+
         this.game = sector.setUpGame();
 
     }
