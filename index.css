@@ -343,7 +343,7 @@ button:disabled {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   background-color: black;
   height: 100%;
   width: 100%;
