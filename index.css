@@ -414,6 +414,10 @@ button:disabled {
   padding: 10px;
 }
 
+#rules button .inactive {
+    
+}
+
 .rule.hidden {
   display: none;
 }

@@ -399,6 +399,9 @@ var sector = (function () {
         // show the first rule
         document.getElementById("rule_1").classList.remove("hidden");
         this.game.currentRule = 1
+        // Disable the prev button, enable the next button
+        document.getElementById("rule+-1").setAttribute("disabled", "");
+        document.getElementById("rule+1").removeAttribute("disabled");
     }
 
     function changeRule(increment) {
@@ -406,9 +409,10 @@ var sector = (function () {
         document.getElementById("rule_" + (this.game.currentRule + increment)).classList.remove("hidden");
 
         if (!document.getElementById("rule_" + (this.game.currentRule + increment + increment))) {
-            document.getElementById("rule+" + increment).classList.add("hidden")
+            document.getElementById("rule+" + increment).setAttribute("disabled", "");
+
         } else {
-            document.getElementById("rule+" + (-1 * increment)).classList.remove("hidden")
+            document.getElementById("rule+" + (-1 * increment)).removeAttribute("disabled");
         }
         this.game.currentRule += increment
     }
