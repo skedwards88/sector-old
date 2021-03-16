@@ -8,7 +8,7 @@ var sector = (function () {
 
         this.winner = null;
 
-        this.deck = tiles.slice();
+        this.deck = JSON.parse(JSON.stringify(tiles));
 
         // The board starts off as a 10x10 grid of empty squares
         this.board = Array(10).fill(Array(10).fill(null)).map(row => row.map(square => new Quadrant({
