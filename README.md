@@ -2,14 +2,18 @@
 
 Strategically place tiles to build the greatest galactic empire.
 
-**[Click to play!](https://skedwards88.github.io/sector/)**
+**Players:** 2
 
-* 2 Players
+**Time:** 15 minutes
 
-* 5 Minutes
+[Play Now!](https://skedwards88.github.io/sector/)
 
-![icons](images/favicon.png)
+![Game icon](images/favicon.png)
 
-Game designed by Colin Thom
+---
 
-Built by Sarah Edwards
+Do you have feedback or ideas for improvement? [Open an issue](https://github.com/skedwards88/sector/issues/new).
+
+Want more games? Visit [CnS Games](https://skedwards88.github.io/portfolio/).
+
+![Status](https://github.com/skedwards88/sector/actions/workflows/deploy.yml/badge.svg)
