@@ -15,11 +15,15 @@
     <script>
         // Check that service workers are supported
         if ('serviceWorker' in navigator) {
+            console.log('SW in nav')
+            console.log(location.hostname)
             const path =
                 location.hostname === "localhost"
                 ? "/sw.js"
                 : "/sector/sw.js";
             const scope = location.hostname === "localhost" ? "" : "/sector/";
+            console.log(path)
+            console.log(scope)
 
           // Use the window load event to keep the page load performant
           window.addEventListener('load', () => {
@@ -507,7 +511,7 @@
             <div>Built by Sarah Edwards</div>
             <div>Want more games?
                 Visit <a href="https://skedwards88.github.io/portfolio/">CnS Games</a></div>
-            <div>Version 2.1.1</div>
+            <div>Version 2.1.2</div>
         </div>
         <div id="rule_2" class="rule hidden">
             <div>Players take turns placing tiles on the board (the Expanse).</div>
