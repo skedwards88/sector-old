@@ -1,1 +1,2 @@
 - generate and use all faivcon types
+- set up precommit hook for linters
