@@ -1,0 +1,22 @@
+{
+  "name": "Sector",
+  "short_name": "Sector",
+  "description": "Strategically place tiles to build the greatest galactic empire.",
+  "dir": "auto",
+  "lang": "en-US",
+  "display": "standalone",
+  "orientation": "any",
+  "start_url": "../.",
+  "background_color": "#F1F0F0",
+  "theme_color": "#6e799e",
+  "icons": [
+    {
+      "src": "./images/favicon.png",
+      "sizes": "324x324"
+    },
+    {
+      "src": "./images/icon_512.png",
+      "sizes": "512x512"
+    }
+  ]
+}

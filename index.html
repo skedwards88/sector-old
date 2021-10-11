@@ -8,6 +8,25 @@
     <title>Sector</title>
     <link rel="stylesheet" href="index.css">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <link rel='manifest' href="manifest.json">
+    <meta name="theme-color" content="#6e799e">
+    <link rel="apple-touch-icon" sizes="324x324" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="images/icon_512.png">
+    <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            const path =
+                location.hostname === "localhost"
+                ? "/sw.js"
+                : "/sector/sw.js";
+            const scope = location.hostname === "localhost" ? "" : "/sector/";
+
+          // Use the window load event to keep the page load performant
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register(path, { scope: scope });
+          });
+        }
+        </script>
 </head>
 
 <body>
@@ -487,7 +506,7 @@
             <div>Designed by Colin Thom</div>
             <div>Built by Sarah Edwards</div>
             <div>Want more games?\nVisit <a href="https://skedwards88.github.io/portfolio/">CnS Games</a></div>
-            <div>Version 2.0</div>
+            <div>Version 2.1</div>
         </div>
         <div id="rule_2" class="rule hidden">
             <div>Players take turns placing tiles on the board (the Expanse).</div>
