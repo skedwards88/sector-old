@@ -17,17 +17,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Switch branch
+        run: |
+          git config --global user.name ${{ github.actor }}
+          git config --global user.email ${{ github.actor }}@gmail.com
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git status
+          git checkout gh-pages
+
       - name: Install requirements
         run: npm ci
 
       - name: Build
         run: npm run build
 
-      - name: Deploy
+      - name: Push
         run: |
-          git config --global user.name ${{ github.actor }}
-          git config --global user.email ${{ github.actor }}@gmail.com
-          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git status
           git add .
           git commit -m "build service worker files"
