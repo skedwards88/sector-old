@@ -20,8 +20,11 @@
   },
   "homepage": "https://github.com/skedwards88/sector#readme",
   "devDependencies": {
+    "eslint": "^8.0.1",
     "express": "^4.17.1",
-    "jslint": "^0.12.1",
+    "prettier": "^2.4.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0",
     "workbox-cli": "^6.3.0"
   }
 }
