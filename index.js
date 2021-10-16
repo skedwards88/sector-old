@@ -352,7 +352,7 @@ var sector = (function () {
             // If the other player has already scored, check if the new score is equal or higher
             if (this.game.scores[opponentColor] !== null) {
                 let new_score = calculateScore(playerColor, this.game.board)
-                if (new_score >= this.game.scores[opponentColor]) {
+                if (new_score > this.game.scores[opponentColor]) {
                     this.game.scores[playerColor] = new_score
                     this.game.winner = playerColor
                     gameOver(this.game);
