@@ -5,30 +5,35 @@
   --transparent: transparent;
   --quad: 9vw;
   --nav: 20vw;
-  --red-button: radial-gradient(
-    ellipse at 20% 20%,
-    #e9bcbc 0%,
-    rgb(201, 61, 61) 50%,
-    rgb(148, 17, 17) 100%
-  );
-  --red-active: radial-gradient(
-    ellipse at 20% 20%,
-    #e9bcbc 0%,
-    rgb(201, 61, 61) 50%,
-    rgb(83, 8, 8) 100%
-  );
-  --blue-button: radial-gradient(
-    ellipse at 20% 20%,
-    #bdbce9 0%,
-    rgb(95, 104, 230) 50%,
-    rgb(37, 17, 148) 100%
-  );
-  --blue-active: radial-gradient(
-    ellipse at 20% 20%,
-    #bdbce9 0%,
-    rgb(95, 104, 230) 50%,
-    rgb(15, 5, 70) 100%
-  );
+  --red-button:
+    radial-gradient(
+      ellipse at 20% 20%,
+      #e9bcbc 0%,
+      rgb(201, 61, 61) 50%,
+      rgb(148, 17, 17) 100%
+    );
+  --red-active:
+    radial-gradient(
+      ellipse at 20% 20%,
+      #e9bcbc 0%,
+      rgb(201, 61, 61) 50%,
+      rgb(83, 8, 8) 100%
+    );
+  --blue-button:
+    radial-gradient(
+      ellipse at 20% 20%,
+      #bdbce9 0%,
+      rgb(95, 104, 230) 50%,
+      rgb(37, 17, 148) 100%
+    );
+  --blue-active:
+    radial-gradient(
+      ellipse at 20% 20%,
+      #bdbce9 0%,
+      rgb(95, 104, 230) 50%,
+      rgb(15, 5, 70) 100%
+    );
+
   height: 100%;
 }
 
@@ -64,14 +69,17 @@ body {
 .section {
   display: grid;
 }
+
 .section > * {
   grid-column-start: 1;
   grid-row-start: 1;
 }
+
 #deck {
   align-self: center;
   display: grid;
 }
+
 #deck > * {
   grid-column-start: 1;
   grid-row-start: 1;
@@ -117,6 +125,7 @@ body {
 .square.blue {
   background-color: blue;
 }
+
 .square.black {
   background-color: black;
 }
@@ -128,6 +137,7 @@ body {
 .overlay.blue {
   background-color: rgba(0, 0, 255, 0.7);
 }
+
 .overlay.black {
   background-color: rgba(0, 0, 0, 0.7);
 }
@@ -154,6 +164,7 @@ button.player2 {
 button:active {
   background: var(--blue-active);
 }
+
 button.player2:active {
   background: var(--red-active);
 }
@@ -181,9 +192,11 @@ button:disabled {
   width: calc(var(--nav) * 1.2);
   font-size: calc(var(--nav) * 0.2);
 }
+
 #non-nav > button {
   flex: 1;
 }
+
 #remaining {
   color: white;
   font-size: xx-large;
@@ -198,9 +211,11 @@ button:disabled {
   align-items: center;
   justify-content: center;
 }
+
 #score.hidden {
   display: none;
 }
+
 #offer {
   display: grid;
   grid-template-columns: repeat(2, var(--quad));
@@ -214,21 +229,25 @@ button:disabled {
   border-color: white;
   border-style: solid;
 }
+
 .offer_row0_col1 {
   border-width: 3px 3px 0 0;
   border-color: white;
   border-style: solid;
 }
+
 .offer_row1_col0 {
   border-width: 0 0 3px 3px;
   border-color: white;
   border-style: solid;
 }
+
 .offer_row1_col1 {
   border-width: 0 3px 3px 0;
   border-color: white;
   border-style: solid;
 }
+
 /* #offer_row0col0 {
     border: solid white;
     border-width: 3px 0 0 3px;
@@ -237,12 +256,15 @@ button:disabled {
 #left_up {
   border-radius: 10px 5px 5px 5px;
 }
+
 #right_up {
   border-radius: 5px 10px 5px 5px;
 }
+
 #left_down {
   border-radius: 5px 5px 5px 10px;
 }
+
 #right_down {
   border-radius: 5px 5px 10px 5px;
 }
@@ -259,24 +281,31 @@ button:disabled {
 #left_up_img {
   transform: rotate(135deg);
 }
+
 #up_img {
   transform: rotate(180deg);
 }
+
 #right_up_img {
   transform: rotate(225deg);
 }
+
 #left_img {
   transform: rotate(90deg);
 }
+
 #right_img {
   transform: rotate(270deg);
 }
+
 #left_down_img {
   transform: rotate(45deg);
 }
+
 #right_down_img {
   transform: rotate(315deg);
 }
+
 #rotate_img {
   background-image: url(./images/rotate.svg);
   background-size: 60%;
@@ -287,23 +316,29 @@ button:disabled {
     --quad: 9vh;
     --nav: 20vh;
   }
+
   #game {
     display: flex;
     flex-direction: row;
   }
+
   #board {
     transform: rotate(270deg);
   }
+
   #controls {
     display: flex;
     flex-direction: column-reverse;
   }
+
   #navigation {
     transform: rotate(270deg);
   }
+
   #offer {
     transform: rotate(270deg);
   }
+
   #non-nav {
     min-height: unset;
     width: unset;
@@ -321,6 +356,7 @@ button:disabled {
     --nav: 10vh;
   }
 }
+
 /* Landscape, more square than 3/2 w/h */
 @media (max-aspect-ratio: 3/2) and (orientation: landscape) {
   :root {
@@ -335,6 +371,7 @@ button:disabled {
     --quad: 30px;
     --nav: 60px;
   }
+
   #game {
     height: 100vh;
     width: 100vw;
@@ -353,7 +390,6 @@ button:disabled {
   width: 100%;
   left: 0;
   top: 0;
-  width: 100%;
   display: flex;
   flex-direction: column;
   font-family: monospace;
@@ -364,6 +400,7 @@ button:disabled {
 #gameOver.hidden {
   display: none;
 }
+
 #gameOver {
   flex-direction: column;
   align-items: center;
@@ -373,6 +410,7 @@ button:disabled {
 #gameOver.red {
   background: url("./images/stars.svg"), linear-gradient(black 15%, var(--red));
 }
+
 #gameOver.blue {
   background: url("./images/stars.svg"), linear-gradient(black 15%, var(--blue));
 }
@@ -415,12 +453,13 @@ button:disabled {
 }
 
 #rules button {
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    #fcfcfc 0%,
-    rgb(162, 162, 163) 50%,
-    rgb(5, 1, 29) 100%
-  );
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      #fcfcfc 0%,
+      rgb(162, 162, 163) 50%,
+      rgb(5, 1, 29) 100%
+    );
   border-radius: 10px;
   padding: 10px;
 }
@@ -455,6 +494,7 @@ button:disabled {
   min-height: 100px;
   min-width: 100px;
 }
+
 #symbols {
   background-image: url(./images/rules/symbols.png);
   min-height: 80px;
@@ -467,11 +507,13 @@ button:disabled {
   min-height: 100px;
   min-width: 100px;
 }
+
 #placements {
   background-image: url(./images/rules/placements.png);
   min-height: 150px;
   min-width: 400px;
 }
+
 #sectors {
   background-image: url(./images/rules/sectors.png);
   min-height: 100px;
