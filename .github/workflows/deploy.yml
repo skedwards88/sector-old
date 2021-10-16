@@ -23,6 +23,7 @@ jobs:
           git config --global user.email ${{ github.actor }}@gmail.com
           git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git status
+          echo "about to checkout"
           git checkout gh-pages
 
       - name: Install requirements
