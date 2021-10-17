@@ -27,6 +27,11 @@ jobs:
           echo "about to checkout"
           git checkout gh-pages
 
+      - name: Get updates from default branch
+        run: |
+          git merge -X theirs master --no-commit --allow-unrelated-histories
+          git commit -m "merge master"
+
       - name: Install requirements
         run: npm ci
 
