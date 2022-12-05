@@ -456,42 +456,42 @@
 
       <div id="controls">
         <div id="navigation">
-          <button class="control_button" id="left_up">
+          <button aria-label="move tile left up" class="control_button" id="left_up">
             <div class="nav_img" id="left_up_img"></div>
           </button>
-          <button class="control_button" id="up">
+          <button aria-label="move tile up" class="control_button" id="up">
             <div class="nav_img" id="up_img"></div>
           </button>
-          <button class="control_button" id="right_up">
+          <button aria-label="move tile right up" class="control_button" id="right_up">
             <div class="nav_img" id="right_up_img"></div>
           </button>
-          <button class="control_button" id="left" disabled>
+          <button aria-label="move tile left" class="control_button" id="left" disabled>
             <div class="nav_img" id="left_img"></div>
           </button>
-          <button class="control_button" id="rotate">
+          <button aria-label="rotate tile" class="control_button" id="rotate">
             <div class="nav_img" id="rotate_img"></div>
           </button>
-          <button class="control_button" id="right" disabled>
+          <button aria-label="move tile right" class="control_button" id="right" disabled>
             <div class="nav_img" id="right_img"></div>
           </button>
-          <button class="control_button" id="left_down" disabled>
+          <button aria-label="move tile left down" class="control_button" id="left_down" disabled>
             <div class="nav_img" id="left_down_img"></div>
           </button>
-          <button class="control_button" id="down" disabled>
+          <button aria-label="move tile down" class="control_button" id="down" disabled>
             <div class="nav_img" id="down_img"></div>
           </button>
-          <button class="control_button" id="right_down" disabled>
+          <button aria-label="move tile right down" class="control_button" id="right_down" disabled>
             <div class="nav_img" id="right_down_img"></div>
           </button>
         </div>
         <div id="non-nav">
-          <button class="reg_button" id="newGame">New Game</button>
-          <button class="reg_button" id="openRules">Rules</button>
+          <button aria-label="new game" class="reg_button" id="newGame">New Game</button>
+          <button aria-label="show rules" class="reg_button" id="openRules">Rules</button>
 
-          <button class="reg_button" id="end_turn_button" disabled>
+          <button aria-label="end turn" class="reg_button" id="end_turn_button" disabled>
             End Turn
           </button>
-          <button class="reg_button" id="score_button" disabled>
+          <button aria-label="end turn and score" class="reg_button" id="score_button" disabled>
             End Turn <br />and Score
           </button>
           <div class="reg_button hidden" id="score"></div>
@@ -499,7 +499,7 @@
       </div>
     </div>
     <div class="modal hidden" id="rules">
-      <button id="closeRules">close</button>
+      <button id="closeRules" aria-label="close rules">close</button>
       <div id="rule_1" class="rule">
         <div>SECTOR</div>
         <div>
@@ -585,13 +585,13 @@
         </div>
       </div>
       <div>
-        <button id="rule+-1" disabled>&#60; &#60; &#60;</button>
-        <button id="rule+1">&#62; &#62; &#62;</button>
+        <button aria-label="next rule"id="rule+-1" disabled>&#60; &#60; &#60;</button>
+        <button aria-label="previous rule"id="rule+1">&#62; &#62; &#62;</button>
       </div>
     </div>
     <div class="modal hidden" id="gameOver">
       <div id="gameOverText"></div>
-      <button id="closeGameOver">close</button>
+      <button aria-label="close game over text" id="closeGameOver">close</button>
     </div>
 
     <script type="module" src="index.js"></script>
