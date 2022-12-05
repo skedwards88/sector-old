@@ -1,12 +1,7 @@
-- generate and use all faivcon types
+- switch to react/webpack
+- drag and drop tiles instead? enable tabbing and movement with arrows?
+- add tests
+- make them color match app
+- make maskable icon with black background
+- change to deploy with gh actions and uninstall ghpages
 - set up precommit hook for linters
-- index.html needs to be at root for gh pages, but could organize everything else better. or build to a different branch.
-- tests
-
-All
-
-- autobump version. Could save as variable that a workflow bumps.
-- Change theme color per app
-- Change icons to have non-white background
-- full lighthouse audit
-- change workflow to non run on certain paths (e.g. md files)
