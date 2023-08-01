@@ -1,24 +1,10 @@
-# Sector
+# Sector (old)
 
-Strategically place tiles to build the greatest galactic empire.
+This is the old build of the Sector game, built as an exercise to learn the difference between building an app with/without React.
 
-**Players:** 2
+[See](https://github.com/skedwards88/sector) and [play](https://skedwards88.github.io/sector) the newer instead.
 
-**Time:** 15 minutes
-
-[Play Now!](https://skedwards88.github.io/sector/)
-
-![Game icon](images/favicon.png)
-
----
-
-Do you have feedback or ideas for improvement? [Open an issue](https://github.com/skedwards88/sector/issues/new).
-
-Want more games? Visit [SECT Games](https://skedwards88.github.io/).
-
-![Status](https://github.com/skedwards88/sector/actions/workflows/deploy.yml/badge.svg)
-
----
+## Development
 
 This app was built with plain JS/HTML as an exercise to compare to building with React.
 

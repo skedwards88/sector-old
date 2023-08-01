@@ -1,5 +1,5 @@
 {
-  "name": "sector",
+  "name": "sector-old",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skedwards88/sector.git"
+    "url": "git+https://github.com/skedwards88/sector-old.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/skedwards88/sector/issues"
+    "url": "https://github.com/skedwards88/sector-old/issues"
   },
-  "homepage": "https://github.com/skedwards88/sector#readme",
+  "homepage": "https://github.com/skedwards88/sector-old#readme",
   "devDependencies": {
     "eslint": "^8.0.1",
     "express": "^4.17.1",
